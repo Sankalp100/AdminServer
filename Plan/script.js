@@ -37,11 +37,11 @@ myApp.controller('studentController', ['$scope', '$http', function ($scope, $htt
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("User has created Successfully")
+      alert("Plan has created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while created user Try Again!");
+      alert("Error. while created plan Try Again!");
 
     });
 
@@ -60,11 +60,11 @@ myApp.controller('studentController', ['$scope', '$http', function ($scope, $htt
 
     }).then(function successCallback(response) {
 
-      alert("User has updated Successfully")
+      alert("Plan has updated Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating user Try Again!");
+      alert("Error. while updating plan Try Again!");
 
     });
 
@@ -82,13 +82,13 @@ myApp.controller('studentController', ['$scope', '$http', function ($scope, $htt
 
     }).then(function successCallback(response) {
 
-      alert("User has deleted Successfully");
+      alert("Plan has deleted Successfully");
       var index = $scope.users.indexOf(user);
       $scope.users.splice(index, 1);
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting user Try Again!");
+      alert("Error. while deleting plan Try Again!");
 
     });
 
