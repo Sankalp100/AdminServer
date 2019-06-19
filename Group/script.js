@@ -19,7 +19,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
   }, function errorCallback(response) {
 
-    alert("Error. Try Again!");
+    alert("Error. Please Try Again!");
 
   });
 
@@ -37,11 +37,11 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("Group has created Successfully")
+      alert("Group has been created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while created group Try Again!");
+      alert("Error. while created group. Please Try Again!");
 
     });
 
@@ -64,7 +64,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating group Try Again!");
+      alert("Error. while updating group. Please Try Again!");
 
     });
 
@@ -82,13 +82,13 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
     }).then(function successCallback(response) {
 
-      alert("User has deleted Successfully");
+      alert("Group has been deleted Successfully");
       var index = $scope.users.indexOf(user);
       $scope.users.splice(index, 1);
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting group Try Again!");
+      alert("Error. while deleting group. Please Try Again!");
 
     });
 

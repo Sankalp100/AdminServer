@@ -37,11 +37,11 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("Dietitian has created Successfully")
+      alert("Dietitian has been created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while created dietitian Try Again!");
+      alert("Error. while creating dietitian. PLease Try Again!");
 
     });
 
@@ -60,11 +60,11 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
     }).then(function successCallback(response) {
 
-      alert("Dietitian has updated Successfully")
+      alert("Dietitian has been updated Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating dietitian Try Again!");
+      alert("Error. while updating dietitian . Please Try Again!");
 
     });
 
@@ -82,13 +82,13 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
     }).then(function successCallback(response) {
 
-      alert("dietitian has deleted Successfully");
+      alert("dietitian has been deleted Successfully");
       var index = $scope.users.indexOf(user);
       $scope.users.splice(index, 1);
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting dietitian Try Again!");
+      alert("Error. while deleting dietitian . Please Try Again!");
 
     });
 
