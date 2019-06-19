@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', []);
-myApp.controller('studentController', ['$scope', '$http', function($scope, $http) {
+myApp.controller('studentController', ['$scope', '$http', function ($scope, $http) {
 
   //Buttons Settings
   $scope.submit = true;
@@ -25,7 +25,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
 
   //Create New User
-  $scope.createUser = function() {
+  $scope.createUser = function () {
 
     //$http POST function
     $http({
@@ -37,11 +37,11 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("User has created Successfully")
+      alert("Plan has created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while created user Try Again!");
+      alert("Error. while created plan Try Again!");
 
     });
 
@@ -49,22 +49,22 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
 
   //Update User
-  $scope.updateUser = function() {
+  $scope.updateUser = function () {
 
     //$http PUT function
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/plans' + $scope.user.id,
+      url: 'http://localhost:80/pRESTige-master/api/plans/' + $scope.user.plan_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
 
-      alert("User has updated Successfully")
+      alert("Plan has updated Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating user Try Again!");
+      alert("Error. while updating plan Try Again!");
 
     });
 
@@ -78,24 +78,24 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/plans' + user.id
+      url: 'http://localhost:80/pRESTige-master/api/plans/' + user.plan_id
 
     }).then(function successCallback(response) {
 
-      alert("User has deleted Successfully");
+      alert("Plan has deleted Successfully");
       var index = $scope.users.indexOf(user);
       $scope.users.splice(index, 1);
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting user Try Again!");
+      alert("Error. while deleting plan Try Again!");
 
     });
 
-  };
+  }
 
   //Set $scope on Edit button click
-  $scope.editUser = function(user) {
+  $scope.editUser = function (user) {
 
     $scope.user = user;
     $scope.submit = false;
@@ -107,7 +107,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
 
   //cancel Uodate
-  $scope.cancelUpdate = function() {
+  $scope.cancelUpdate = function () {
     $scope.user = null;
     $scope.submit = true;
     $scope.update = false;
