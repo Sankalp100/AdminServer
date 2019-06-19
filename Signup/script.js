@@ -55,7 +55,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/customer_signups' + $scope.user.customer_id,
+      url: 'http://localhost:80/pRESTige-master/api/customer_signups/' + $scope.user.customer_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
@@ -78,7 +78,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/customer_signups' + user.id
+      url: 'http://localhost:80/pRESTige-master/api/customer_signups/' + user.customer_id
 
     }).then(function successCallback(response) {
 
