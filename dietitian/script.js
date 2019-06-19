@@ -37,11 +37,11 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("User has created Successfully")
+      alert("Dietitian has created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while created user Try Again!");
+      alert("Error. while created dietitian Try Again!");
 
     });
 
@@ -55,16 +55,16 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/dietitians' + $scope.user.id,
+      url: 'http://localhost:80/pRESTige-master/api/dietitians/' + $scope.user.dietitian_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
 
-      alert("User has updated Successfully")
+      alert("Dietitian has updated Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating user Try Again!");
+      alert("Error. while updating dietitian Try Again!");
 
     });
 
@@ -78,17 +78,17 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/dietitians' + user.id
+      url: 'http://localhost:80/pRESTige-master/api/dietitians/' + user.dietitian_id
 
     }).then(function successCallback(response) {
 
-      alert("User has deleted Successfully");
+      alert("dietitian has deleted Successfully");
       var index = $scope.users.indexOf(user);
       $scope.users.splice(index, 1);
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting user Try Again!");
+      alert("Error. while deleting dietitian Try Again!");
 
     });
 

@@ -37,11 +37,11 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("User has created Successfully")
+      alert("Group has created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while created user Try Again!");
+      alert("Error. while created group Try Again!");
 
     });
 
@@ -55,16 +55,16 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/cus_groups' + $scope.user.id,
+      url: 'http://localhost:80/pRESTige-master/api/cus_groups/' + $scope.user.group_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
 
-      alert("User has updated Successfully")
+      alert("Group has updated Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating user Try Again!");
+      alert("Error. while updating group Try Again!");
 
     });
 
@@ -78,7 +78,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/cus_groups' + user.id
+      url: 'http://localhost:80/pRESTige-master/api/cus_groups/' + user.group_id
 
     }).then(function successCallback(response) {
 
@@ -88,7 +88,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting user Try Again!");
+      alert("Error. while deleting group Try Again!");
 
     });
 
