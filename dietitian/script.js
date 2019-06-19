@@ -11,7 +11,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
   //$http GET function
   $http({
     method: 'GET',
-    url: 'http://localhost:80/pRESTige-master/api/uoms'
+    url: 'http://localhost:80/pRESTige-master/api/dietitians'
 
   }).then(function successCallback(response) {
 
@@ -31,17 +31,17 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'POST',
-      url: 'http://localhost:80/pRESTige-master/api/uoms',
+      url: 'http://localhost:80/pRESTige-master/api/dietitians',
       data: $scope.user
 
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("UOM has been created Successfully")
+      alert("Dietitian has been created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while creating UOM Try Again!");
+      alert("Error. while creating dietitian. PLease Try Again!");
 
     });
 
@@ -55,16 +55,16 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/uoms/' + $scope.user.uom_id,
+      url: 'http://localhost:80/pRESTige-master/api/dietitians/' + $scope.user.dietitian_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
 
-      alert("Uom has updated Successfully")
+      alert("Dietitian has been updated Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating Uom. Please Try Again!");
+      alert("Error. while updating dietitian . Please Try Again!");
 
     });
 
@@ -78,17 +78,17 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/uoms/' + user.uom_id
+      url: 'http://localhost:80/pRESTige-master/api/dietitians/' + user.dietitian_id
 
     }).then(function successCallback(response) {
 
-      alert("Uom has been deleted Successfully");
+      alert("dietitian has been deleted Successfully");
       var index = $scope.users.indexOf(user);
       $scope.users.splice(index, 1);
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting Uom. Please Try Again!");
+      alert("Error. while deleting dietitian . Please Try Again!");
 
     });
 

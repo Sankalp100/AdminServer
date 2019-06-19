@@ -5,33 +5,39 @@
     <link data-require="bootstrap@4.0.5" data-semver="4.0.5" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
     <script data-require="bootstrap@4.0.5" data-semver="4.0.5" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
     <script data-require="angularjs@1.6.2" data-semver="1.6.2" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.js"></script>
-    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <link rel="stylesheet" href="style.css" />
     <script src="script.js"></script>
   </head>
 
   <body class="container" ng-app="myApp" ng-controller="studentController" ng-cloak>
     
-    <h1>Plan</h1>
+    <h1>Group</h1>
     
     <!--Form-->
     <form ng-submit="createUser()">
-      <h4>Create Plan</h4>
+      <h4>Add Group</h4>
       <div class="form-group">
-        <label class="control-label col-md-2">Plan Name</label>
+        <label class="control-label col-md-2">Group Name</label>
         <div class="col-md-4">
-            <input type="text" class="form-control" ng-model="user.plan_name" placeholder="" />
+            <input type="text" class="form-control" ng-model="user.group_name" placeholder="" />
         </div>
       </div>
       <div class="form-group">
-        <label class="control-label col-md-2">Plan Code</label>
+        <label class="control-label col-md-2">Group Code</label>
         <div class="col-md-4">
-            <input type="text" class="form-control" ng-model="user.plan_code" placeholder="" />
+            <input type="text" class="form-control" ng-model="user.group_code" placeholder="" />
         </div>
       </div>
       <div class="form-group">
-        <label class="control-label col-md-2">Description</label>
+        <label class="control-label col-md-2">Dietitian Name</label>
         <div class="col-md-4">
-            <input type="text" class="form-control" ng-model="user.description" placeholder="" />
+            <input type="text" class="form-control" ng-model="user.dietitian_name" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">isActive</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.isActive" placeholder="" />
         </div>
       </div>
       <div class="col-md-offset-2 col-md-10">
@@ -44,21 +50,22 @@
     
     <!--Users List-->
     <br />
-    <h4>Users List</h4>
+    <h4>Groups List</h4>
     <table class="table table-striped">
       <thead>
         <tr>
-          <td>Name</td>
-          <td>Plan Code</td>
-          <td>Description</td>
-          <td>Action Commands</td>
+          <td>GroupName</td>
+          <td>Group Code</td>
+          <td>Dietitian Name</td>
+          <td>isActive</td>
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="user in users">
-          <td>{{user.plan_name}}</td>
-          <td>{{user.plan_code}}</td>
-          <td>{{user.description}}</td>
+          <td>{{user.group_name}}</td>
+          <td>{{user.group_code}}</td>
+          <td>{{user.dietitian_name}}</td>
+          <td>{{user.isActive}}</td>
           <td>
             <button class="btn btn-default btn-sm" ng-click="editUser(user)">Edit</button>
             <button class="btn btn-default btn-sm" ng-click="deleteUser(user)">Delete</button>

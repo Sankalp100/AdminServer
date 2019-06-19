@@ -11,7 +11,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
   //$http GET function
   $http({
     method: 'GET',
-    url: 'http://localhost:80/pRESTige-master/api/uoms'
+    url: 'http://localhost:80/pRESTige-master/api/cus_groups'
 
   }).then(function successCallback(response) {
 
@@ -19,7 +19,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
   }, function errorCallback(response) {
 
-    alert("Error. Try Again!");
+    alert("Error. Please Try Again!");
 
   });
 
@@ -31,17 +31,17 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'POST',
-      url: 'http://localhost:80/pRESTige-master/api/uoms',
+      url: 'http://localhost:80/pRESTige-master/api/cus_groups',
       data: $scope.user
 
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("UOM has been created Successfully")
+      alert("Group has been created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while creating UOM Try Again!");
+      alert("Error. while created group. Please Try Again!");
 
     });
 
@@ -55,16 +55,16 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/uoms/' + $scope.user.uom_id,
+      url: 'http://localhost:80/pRESTige-master/api/cus_groups/' + $scope.user.group_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
 
-      alert("Uom has updated Successfully")
+      alert("Group has updated Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating Uom. Please Try Again!");
+      alert("Error. while updating group. Please Try Again!");
 
     });
 
@@ -78,17 +78,17 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/uoms/' + user.uom_id
+      url: 'http://localhost:80/pRESTige-master/api/cus_groups/' + user.group_id
 
     }).then(function successCallback(response) {
 
-      alert("Uom has been deleted Successfully");
+      alert("Group has been deleted Successfully");
       var index = $scope.users.indexOf(user);
       $scope.users.splice(index, 1);
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting Uom. Please Try Again!");
+      alert("Error. while deleting group. Please Try Again!");
 
     });
 
