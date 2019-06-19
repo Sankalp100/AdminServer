@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', []);
-myApp.controller('studentController', ['$scope', '$http', function($scope, $http) {
+myApp.controller('studentController', ['$scope', '$http', function ($scope, $http) {
 
   //Buttons Settings
   $scope.submit = true;
@@ -25,7 +25,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
 
   //Create New User
-  $scope.createUser = function() {
+  $scope.createUser = function () {
 
     //$http POST function
     $http({
@@ -49,13 +49,13 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
 
   //Update User
-  $scope.updateUser = function() {
+  $scope.updateUser = function () {
 
     //$http PUT function
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/plans' + $scope.user.id,
+      url: 'http://localhost:80/pRESTige-master/api/plans/' + $scope.user.plan_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
@@ -78,7 +78,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/plans' + user.id
+      url: 'http://localhost:80/pRESTige-master/api/plans/' + user.plan_id
 
     }).then(function successCallback(response) {
 
@@ -92,10 +92,10 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
     });
 
-  };
+  }
 
   //Set $scope on Edit button click
-  $scope.editUser = function(user) {
+  $scope.editUser = function (user) {
 
     $scope.user = user;
     $scope.submit = false;
@@ -107,7 +107,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
 
   //cancel Uodate
-  $scope.cancelUpdate = function() {
+  $scope.cancelUpdate = function () {
     $scope.user = null;
     $scope.submit = true;
     $scope.update = false;
