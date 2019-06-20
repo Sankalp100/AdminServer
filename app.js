@@ -36,6 +36,18 @@ app.config(['$routeProvider', function($routeProvider){
     templateUrl: 'Recipetype/recipetype.html',
     controller: 'Recipetype/recipetype.js'
   })
+  .when('/Dashboard', {
+    redirectTo: function(){
+      alert("Sorry! not implemented yet... will take you to plan");
+      return '/plan';
+    }
+  })
+  .when('/', {
+    template: '<h1>FitMix<h1>'
+  })
+  .otherwise({
+    template: '<h1>FitMix No contant<h1>'
+  })
 
 }]);
 
