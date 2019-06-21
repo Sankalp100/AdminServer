@@ -22,9 +22,13 @@
         integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
         crossorigin="anonymous"></script>
 
+    <!-- angularJs script -->
+    <script data-require="angularjs@1.6.2" data-semver="1.6.2" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.22/angular-ui-router.min.js"></script>
+
 </head>
 
-<body>
+<body ng-app="app4">
 
     <div class="wrapper">
         <!-- Sidebar  -->
@@ -42,7 +46,7 @@
                     </a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                            <a href="#">Plan</a>
+                            <a href="#!plan">Plan</a>
                         </li>
                         <li>
                             <a href="#">Dietitian</a>
@@ -144,7 +148,7 @@
                     </div>
                 </div>
             </nav>
-
+            <div ui-view></div>
             <!-- <h2>Collapsible Sidebar Using Bootstrap 4</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
                 dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
@@ -198,6 +202,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"
         integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm"
         crossorigin="anonymous"></script>
+
+    <script src="app4.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function () {
