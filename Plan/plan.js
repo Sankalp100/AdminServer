@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', []);
-myApp.controller('studentController', ['$scope', '$http', function ($scope, $http) {
+myApp.controller('planController', ['$scope', '$http', function ($scope, $http) {
 
   //Buttons Settings
   $scope.submit = true;
@@ -114,8 +114,5 @@ myApp.controller('studentController', ['$scope', '$http', function ($scope, $htt
     $scope.cancel = false;
     $scope.userid = true;
   };
-
-  
-
 
 }]);

@@ -5,7 +5,7 @@ app4.config(['$stateProvider', function($stateProvider){
   .state('Plan', {
     url: '/plan',
     templateUrl: 'Plan/plan.html',
-    controller: 'studentController'
+    controller: 'planController'
   })
   .state('Dietitian', {
     url: '/dietitian',
@@ -36,9 +36,17 @@ app4.config(['$stateProvider', function($stateProvider){
     url: '/customer_signups',
     templateUrl: 'Signup/signup.html',
     controller: 'studentController'
+  })
+  .state('Recipe',{
+    url: '/Recipe',
+    templateUrl: "Recipe/recipe.html",
+    controller: "recipeController"
+  })
+  .state('Ingrdients',{
+    url: '/Ingredients',
+    templateUrl: "ingredients/index.html",
+    controller: "recipeController"
   });
   
-  
-  
-
 }])
+

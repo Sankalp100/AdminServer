@@ -1,5 +1,5 @@
 var myApp = angular.module('myApp', []);
-myApp.controller('studentController', ['$scope', '$http', function($scope, $http) {
+myApp.controller('recipeController', ['$scope', '$http', function($scope, $http) {
 
   //Buttons Settings
   $scope.submit = true;
