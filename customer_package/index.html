@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <link data-require="bootstrap@4.0.5" data-semver="4.0.5" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+    <script data-require="bootstrap@4.0.5" data-semver="4.0.5" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
+    <script data-require="angularjs@1.6.2" data-semver="1.6.2" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+  </head>
+
+  <body class="container" ng-app="myApp" ng-controller="studentController" ng-cloak>
+    
+    <h1>Customer Package</h1>
+    
+   <!-- Form-->
+   <!--<form ng-submit="createUser()">
+      <h4>Create Recipe</h4>
+      <div class="form-group">
+        <label class="control-label col-md-2">Recipe Name</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.recipe_name" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Parent Recipe</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.parent_recipe" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Variants</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.variants" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Refernece_url</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.reference_url" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Possible Measurments</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.possible_measurements" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Type of Recipe</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.typeofrecipe" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Upload Image</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.upload_image" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Description</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.description" placeholder="" />
+        </div>
+      </div>
+      <div class="col-md-offset-2 col-md-10">
+      <input type="submit" value="submit" class="btn  btn-sm" ng-show="submit" />    
+      <input type="button" value="update" ng-click="updateUser()" class="btn btn-default btn-sm" ng-show="update" />    
+      <input type="button" value="cancel" ng-click="cancelUpdate()" class="btn btn-default btn-sm" ng-show="cancel"/>    
+      </div>
+    </form>-->
+    <!--End Form-->
+    
+    <!--Users List-->
+    <br />
+    <h4>Users List</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Customer Name</td>
+          <td>Customer Email</td>
+          <td>Customer Number</td>
+          <td>Gender</td>
+          <td>Dietican Name</td>
+          <td>Package Name</td>
+          <td>Start Date</td>
+          <td>Action Commands</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in users">
+          <td>{{user.customer_name}}</td>
+          <td>{{user.customer_email}}</td>
+          <td>{{user.customer_mobileno}}</td>
+          <td>{{user.gender}}</td>
+          <td>{{user.dietitian_name}}</td>
+          <td>{{user.package_name}}</td>
+          <td>{{user.created_on}}</td>
+          <td>
+            <button class="btn btn-default btn-sm" ng-click="editUser(user)">Edit</button>
+            <button class="btn btn-default btn-sm" ng-click="deleteUser(user)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+ 
+    </table>
+    
+  </body>
+
+</html>
