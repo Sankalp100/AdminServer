@@ -1,92 +1,100 @@
-
 <div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      Ingredient
+      <small>List</small>
+    </h1>
+  </section>
+  <br>
 
-<a type="button" href="#!add-ingredients">Add Ingrediant</a>
-<!--Users List-->
-<br />
-<h4>Users List</h4>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <td>Food Code</td>
-      <td>Food Group</td>
-      <td>Ingrediant Type</td>
-      <td>Food Name</td>
-      <td>Guju Name</td>
-      <td>Quantity</td>
-      <td>One_Exchange</td>
-      <td>Energy kj</td>
-      <td>Energy kcal</td>
-      <td>GI value</td>
-      <td>GL value</td>
-      <td>Carbohydrate</td>
-      <td>Protein</td>
-      <td>Total Fibre</td>
-      <td>Solublf</td>
-      <td>In solublf</td>
-      <td>Invisible Totalfat</td>
-      <td>Visiblefat</td>
-      <td>Thiamine</td>
-      <td>Riboflavin</td>
-      <td>Niacin</td>
-      <td>Biotin</td>
-      <td>Folates</td>
-      <td>Ascorbic Acid</td>
-      <td>vitamin d2d3</td>
-      <td>Calcium</td>
-      <td>Phosphorous</td>
-      <td>Iron</td>
-      <td>Sodium</td>
-      <td>Potassium</td>
-      <td>Zinc</td>
-      <td>Magnesium</td>
-      <td>Sfa</td>
+  <section class="content">
+    <a type="button" href="#!add-ingredients">Add Ingrediant</a>
+    <!--Users List-->
 
-    </tr>
-  </thead>
-  <tbody>
-    <tr ng-repeat="user in users">
+    <h4>Users List</h4>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td>Food Code</td>
+          <td>Food Group</td>
+          <td>Ingrediant Type</td>
+          <td>Food Name</td>
+          <td>Guju Name</td>
+          <td>Quantity</td>
+          <td>One_Exchange</td>
+          <td>Energy kj</td>
+          <td>Energy kcal</td>
+          <td>GI value</td>
+          <td>GL value</td>
+          <td>Carbohydrate</td>
+          <td>Protein</td>
+          <td>Total Fibre</td>
+          <td>Solublf</td>
+          <td>In solublf</td>
+          <td>Invisible Totalfat</td>
+          <td>Visiblefat</td>
+          <td>Thiamine</td>
+          <td>Riboflavin</td>
+          <td>Niacin</td>
+          <td>Biotin</td>
+          <td>Folates</td>
+          <td>Ascorbic Acid</td>
+          <td>vitamin d2d3</td>
+          <td>Calcium</td>
+          <td>Phosphorous</td>
+          <td>Iron</td>
+          <td>Sodium</td>
+          <td>Potassium</td>
+          <td>Zinc</td>
+          <td>Magnesium</td>
+          <td>Sfa</td>
 
-      <td>{{user.food_code}}</td>
-      <td>{{user.food_group}}</td>
-      <td>{{user.ingrediant_type}}</td>
-      <td>{{user.food_name}}</td>
-      <td>{{user.guju_name}}</td>
-      <td>{{user.quantity}}</td>
-      <td>{{user.one_exchange}}</td>
-      <td>{{user.energy_kj}}</td>
-      <td>{{user.energy_kcal}}</td>
-      <td>{{user.gi_value}}</td>
-      <td>{{user.gl_value}}</td>
-      <td>{{user.carbohydrate}}</td>
-      <td>{{user.protein}}</td>
-      <td>{{user.total_fibre}}</td>
-      <td>{{user.solublf}}</td>
-      <td>{{user.in_solublf}}</td>
-      <td>{{user.invisible_totalfat}}</td>
-      <td>{{user.visiblefat}}</td>
-      <td>{{user.thiamine}}</td>
-      <td>{{user.riboflavin}}</td>
-      <td>{{user.niacin}}</td>
-      <td>{{user.biotin}}</td>
-      <td>{{user.folates}}</td>
-      <td>{{user.ascorbic_Acid}}</td>
-      <td>{{user.vitamin_d2d3}}</td>
-      <td>{{user.calcium}}</td>
-      <td>{{user.phosphorous}}</td>
-      <td>{{user.iron}}</td>
-      <td>{{user.sodium}}</td>
-      <td>{{user.potassium}}</td>
-      <td>{{user.zinc}}</td>
-      <td>{{user.magnesium}}</td>
-      <td>{{user.sfa}}</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="user in users">
 
-      <td>
-        <button class="btn btn-default btn-sm" ng-click="editUser(user)">Edit</button>
-        <button class="btn btn-default btn-sm" ng-click="deleteUser(user)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
+          <td>{{user.food_code}}</td>
+          <td>{{user.food_group}}</td>
+          <td>{{user.ingrediant_type}}</td>
+          <td>{{user.food_name}}</td>
+          <td>{{user.guju_name}}</td>
+          <td>{{user.quantity}}</td>
+          <td>{{user.one_exchange}}</td>
+          <td>{{user.energy_kj}}</td>
+          <td>{{user.energy_kcal}}</td>
+          <td>{{user.gi_value}}</td>
+          <td>{{user.gl_value}}</td>
+          <td>{{user.carbohydrate}}</td>
+          <td>{{user.protein}}</td>
+          <td>{{user.total_fibre}}</td>
+          <td>{{user.solublf}}</td>
+          <td>{{user.in_solublf}}</td>
+          <td>{{user.invisible_totalfat}}</td>
+          <td>{{user.visiblefat}}</td>
+          <td>{{user.thiamine}}</td>
+          <td>{{user.riboflavin}}</td>
+          <td>{{user.niacin}}</td>
+          <td>{{user.biotin}}</td>
+          <td>{{user.folates}}</td>
+          <td>{{user.ascorbic_Acid}}</td>
+          <td>{{user.vitamin_d2d3}}</td>
+          <td>{{user.calcium}}</td>
+          <td>{{user.phosphorous}}</td>
+          <td>{{user.iron}}</td>
+          <td>{{user.sodium}}</td>
+          <td>{{user.potassium}}</td>
+          <td>{{user.zinc}}</td>
+          <td>{{user.magnesium}}</td>
+          <td>{{user.sfa}}</td>
 
-</table>
+          <td>
+            <button class="btn btn-default btn-sm" ng-click="editUser(user)">Edit</button>
+            <button class="btn btn-default btn-sm" ng-click="deleteUser(user)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+
+    </table>
+  </section>
 </div>
