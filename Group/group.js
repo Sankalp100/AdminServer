@@ -60,8 +60,8 @@
       $http({
 
         method: 'PUT',
-        url: 'http://localhost:80/pRESTige-master/api/cus_groups/' + $scope.user.group_id,
-        data: $scope.user
+        url: 'http://localhost:80/pRESTige-master/api/cus_groups?group_code=' + $scope.user.group_code,
+        data: $scope.user.group_code
 
       }).then(function successCallback(response) {
 
@@ -83,7 +83,7 @@
       $http({
 
         method: 'DELETE',
-        url: 'http://localhost:80/pRESTige-master/api/cus_groups/' + user.group_id
+        url: 'http://localhost:80/pRESTige-master/api/cus_groups?group_code=' + user.group_code
 
       }).then(function successCallback(response) {
 

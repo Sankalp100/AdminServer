@@ -27,11 +27,12 @@
       </div>
       <div class="form-group col-md-2">
         <label class="control-label">Dietitian Name</label>
-        <input type="text" class="form-control" ng-model="user.dietitian_name" placeholder="" />
+        <input type="text" class="form-control" ng-model="user.dietitian_name.dietitian_name" placeholder="" />
       </div>
-      <div class="form-group col-md-2">
-        <label class="control-label">isActive</label>
-        <input type="text" class="form-control" ng-model="user.isActive" placeholder="" />
+      <div class="form-check check">
+        <label class="form-check-label">
+          <input type="checkbox" class="form-check-input" ng-model="user.isActive">Is Default
+        </label>
       </div>
     </div>
     <div class="col-md-offset-2 col-md-10">
