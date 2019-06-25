@@ -30,7 +30,7 @@ app4.config(['$stateProvider', function($stateProvider){
   .state('Group', {
     url: '/cus_groups',
     templateUrl: 'Group/group.html',
-    controller: 'studentController'
+    controller: 'groupController'
   })
   .state('Uom', {
     url: '/uoms',

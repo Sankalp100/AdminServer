@@ -52,13 +52,14 @@
         <td>Group Code</td>
         <td>Dietitian Name</td>
         <td>isActive</td>
+        <td>Action</td>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="user in users">
         <td>{{user.group_name}}</td>
         <td>{{user.group_code}}</td>
-        <td>{{user.dietitian_name}}</td>
+        <td>{{user.dietitian_name.dietitian_name}}</td>
         <td>{{user.isActive}}</td>
         <td>
           <button class="btn btn-default btn-sm" ng-click="editUser(user)">Edit</button>
