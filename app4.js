@@ -10,12 +10,12 @@ app4.config(['$stateProvider', function($stateProvider){
   .state('Dietitian', {
     url: '/dietitian',
     templateUrl: 'Dietitian/dietitian.html',
-    controller: 'studentController'
+    controller: 'dietitiansController'
   })
   .state('RecipeType', {
     url: '/recipetypes',
     templateUrl: 'RecipeType/recipetype.html',
-    controller: 'studentController'
+    controller: 'recipetypeController'
   })
   .state('Package', {
     url: '/packages',
