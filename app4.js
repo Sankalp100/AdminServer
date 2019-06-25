@@ -3,7 +3,7 @@ var app4 = angular.module('app4',['ui.router']);
 app4.config(['$stateProvider', function($stateProvider){
   $stateProvider
   .state('Plan', {
-    url: '/plan',
+    url: '/Plan',
     templateUrl: 'Plan/plan.html',
     controller: 'planController'
   })
@@ -30,7 +30,7 @@ app4.config(['$stateProvider', function($stateProvider){
   .state('Uom', {
     url: '/uoms',
     templateUrl: 'Uom/uom.html',
-    controller: 'studentController'
+    controller: 'uomController'
   })
   .state('Signup', {
     url: '/customer_signups',
@@ -63,5 +63,6 @@ app4.config(['$stateProvider', function($stateProvider){
     controller: "studentController"
   });
   
-}])
+}
+])
 
