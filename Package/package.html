@@ -61,23 +61,23 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <td>Package Name</td>
+        <td>Name</td>
+        <td>Code</td>
+        <td>Duration</td>
         <td>Plan Name</td>
         <td>Dietitian Name</td>
-        <td>Duration</td>
         <td>isGroupPackage</td>
-        <td>Dietitian Name</td>
-
+        <td>Action</td>
       </tr>
     </thead>
     <tbody>
       <tr ng-repeat="user in users">
         <td>{{user.package_name}}</td>
-        <td>{{user.plan_name}}</td>
-        <td>{{user.dietitian_name}}</td>
+        <td>{{user.package_code}}</td>
         <td>{{user.duration}}</td>
+        <td>{{user.plan_name.plan_name}}</td>
+        <td>{{user.dietitian_name.dietitian_name}}</td>
         <td>{{user.isGroupPackage	}}</td>
-        <td>{{user.description}}</td>
         <td>
           <button class="btn btn-default btn-sm" ng-click="editUser(user)">Edit</button>
           <button class="btn btn-default btn-sm" ng-click="deleteUser(user)">Delete</button>

@@ -20,7 +20,7 @@ app4.config(['$stateProvider', function($stateProvider){
   .state('Package', {
     url: '/packages',
     templateUrl: 'Package/package.html',
-    controller: 'studentController'
+    controller: 'packageController'
   })
   .state('Group', {
     url: '/cus_groups',
