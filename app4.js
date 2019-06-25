@@ -22,6 +22,11 @@ app4.config(['$stateProvider', function($stateProvider){
     templateUrl: 'Package/package.html',
     controller: 'packageController'
   })
+  .state('add-package',{
+    url: '/add-package',
+    templateUrl: "Package/add-package.html",
+    controller: 'packageController'
+  })
   .state('Group', {
     url: '/cus_groups',
     templateUrl: 'Group/group.html',
@@ -49,7 +54,8 @@ app4.config(['$stateProvider', function($stateProvider){
   })
   .state('add-ingredients',{
     url: '/add-ingredients',
-    templateUrl: "ingredients/add-ingredients.html"
+    templateUrl: "ingredients/add-ingredients.html",
+    controller: "ingredientsController"
   })
   .state('Customer-List',{
     url: '/Customer-List',
