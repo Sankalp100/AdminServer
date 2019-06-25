@@ -47,6 +47,10 @@ app4.config(['$stateProvider', function($stateProvider){
     templateUrl: "ingredients/index.html",
     controller: "ingredientsController"
   })
+  .state('add-ingredients',{
+    url: '/add-ingredients',
+    templateUrl: "ingredients/add-ingredients.html"
+  })
   .state('Customer-List',{
     url: '/Customer-List',
     templateUrl: "Customer_list/index.html",
