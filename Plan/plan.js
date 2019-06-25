@@ -61,7 +61,7 @@ function planController($scope, $http) {
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/plans?plan_code=' + $scope.user.plan_code,
+      url: 'http://localhost:80/pRESTige-master/api/plans/' + $scope.user.plan_code,
       data: $scope.user
 
     }).then(function successCallback(response) {
