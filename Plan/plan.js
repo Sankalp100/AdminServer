@@ -1,5 +1,11 @@
-var myApp = angular.module('myApp', []);
-myApp.controller('studentController', ['$scope', '$http', function ($scope, $http) {
+(function() {
+
+angular.module('app4').controller('planController', planController);
+
+planController.$inject = ['$scope', '$http'];
+
+
+function planController($scope, $http) {
 
   //Buttons Settings
   $scope.submit = true;
@@ -55,7 +61,7 @@ myApp.controller('studentController', ['$scope', '$http', function ($scope, $htt
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/plans/' + $scope.user.plan_id,
+      url: 'http://localhost:80/pRESTige-master/api/plans/' + $scope.user.plan_code,
       data: $scope.user
 
     }).then(function successCallback(response) {
@@ -78,7 +84,7 @@ myApp.controller('studentController', ['$scope', '$http', function ($scope, $htt
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/plans/' + user.plan_id
+      url: 'http://localhost:80/pRESTige-master/api/plans/' + user.plan_code
 
     }).then(function successCallback(response) {
 
@@ -115,7 +121,5 @@ myApp.controller('studentController', ['$scope', '$http', function ($scope, $htt
     $scope.userid = true;
   };
 
-  
-
-
-}]);
+}
+})();

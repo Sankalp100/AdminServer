@@ -1,10 +1,5 @@
-(function() {
-
-  angular.module('app4').controller('uomController', uomController);
-  
-  uomController.$inject = ['$scope', '$http'];
-
- function uomController ($scope, $http) {
+var myApp = angular.module('myApp', []);
+myApp.controller('studentController', ['$scope', '$http', function($scope, $http) {
 
   //Buttons Settings
   $scope.submit = true;
@@ -16,7 +11,7 @@
   //$http GET function
   $http({
     method: 'GET',
-    url: 'http://localhost:80/pRESTige-master/api/uoms'
+    url: 'http://localhost:80/pRESTige-master/api/cus_imports'
 
   }).then(function successCallback(response) {
 
@@ -24,7 +19,7 @@
 
   }, function errorCallback(response) {
 
-    alert("Error. Try Again!");
+    alert("Error. Please Try Again!");
 
   });
 
@@ -36,17 +31,17 @@
     $http({
 
       method: 'POST',
-      url: 'http://localhost:80/pRESTige-master/api/uoms',
+      url: 'http://localhost:80/pRESTige-master/api/cus_imports',
       data: $scope.user
 
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("UOM has been created Successfully")
+      alert("Package has been created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while creating UOM Try Again!");
+      alert("Error. Please Try Again!");
 
     });
 
@@ -60,16 +55,16 @@
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/uoms/' + $scope.user.uom_id,
+      url: 'http://localhost:80/pRESTige-master/api/cus_imports/' + $scope.user.package_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
 
-      alert("Uom has updated Successfully")
+      alert("Package has been updated Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating Uom. Please Try Again!");
+      alert("Error while updating package. Please Try Again!");
 
     });
 
@@ -83,17 +78,17 @@
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/uoms/' + user.uom_id
+      url: 'http://localhost:80/pRESTige-master/api/cus_imports/' + user.package_id
 
     }).then(function successCallback(response) {
 
-      alert("Uom has been deleted Successfully");
+      alert("Package has been deleted Successfully");
       var index = $scope.users.indexOf(user);
       $scope.users.splice(index, 1);
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting Uom. Please Try Again!");
+      alert("Error. while deleting Group. Please Try Again!");
 
     });
 
@@ -120,8 +115,7 @@
     $scope.userid = true;
   };
 
-  
+ 
 
 
-}
-})();
+}]);

@@ -1,5 +1,10 @@
-var myApp = angular.module('myApp', []);
-myApp.controller('studentController', ['$scope', '$http', function($scope, $http) {
+(function() {
+
+  angular.module('app4').controller('ingredientsController', ingredientsController);
+  
+  ingredientsController.$inject = ['$scope', '$http'];
+
+function ingredientsController($scope, $http) {
 
   //Buttons Settings
   $scope.submit = true;
@@ -168,4 +173,5 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
   //  });
 
 
-}]);
+}
+})();

@@ -204,6 +204,10 @@ a.article:hover {
     color: #fff !important;
 }
 
+.content-wrapper{
+    padding: 15px;
+}
+
 /* ---------------------------------------------------
     CONTENT STYLE
 ----------------------------------------------------- */
