@@ -1,0 +1,44 @@
+SET new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kcal = (Select SUM(energy_kcal) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.gi_value = (Select SUM(gi_value) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.carbohydrate = (Select SUM(carbohydrate) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.protein = (Select SUM(protein) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.total_fibre = (Select SUM(total_fibre) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.solublf = (Select SUM(solublf) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.in_solublf = (Select SUM(in_solublf) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.invisible_totalfat = (Select SUM(invisible_totalfat) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.visiblefat = (Select SUM(visiblefat) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.thiamine = (Select SUM(thiamine) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
