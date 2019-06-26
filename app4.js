@@ -64,8 +64,8 @@ app4.config(['$stateProvider', function($stateProvider){
   })
   .state('Customer-Import',{
     url: '/Customer-Import',
-    templateUrl: "customer_import/index.html",
-    controller: "studentController"
+    templateUrl: "customer_import/customer-import.html",
+    controller: "customerImportController"
   })
   .state('Customer-Package',{
     url: '/Customer-Package',

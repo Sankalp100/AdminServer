@@ -1,5 +1,11 @@
-var myApp = angular.module('myApp', []);
-myApp.controller('studentController', ['$scope', '$http', function($scope, $http) {
+(function() {
+
+  angular.module('app4').controller('customerImportController', customerImportController);
+  
+  customerImportController.$inject = ['$scope', '$http'];
+
+
+function customerImportController ($scope, $http) {
 
   //Buttons Settings
   $scope.submit = true;
@@ -118,4 +124,5 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
  
 
 
-}]);
+}
+})();
