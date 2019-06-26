@@ -28,7 +28,21 @@
         alert("Error. Try Again!");
     
       });
+
+      //Get FoodCode
+      $http({
+        method: 'GET',
+        url: 'http://localhost:80/pRESTige-master/api/ingredients'
     
+      }).then(function successCallback(response) {
+    
+        $scope.food = response.data;
+    
+      }, function errorCallback(response) {
+    
+        alert("Error. Try Again!");
+    
+      });
     
       //Create New User
       $scope.createUser = function () {
