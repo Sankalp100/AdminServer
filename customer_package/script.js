@@ -11,7 +11,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
   //$http GET function
   $http({
     method: 'POST',
-    url: 'http://localhost:80/pRESTige-master/api/procedures/try'
+    url: 'http://localhost:80/pRESTige-master/api/procedures/customer_package'
 
   }).then(function successCallback(response) {
 
@@ -31,7 +31,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'POST',
-      url: 'http://localhost:80/pRESTige-master/api/procedures/try',
+      url: 'http://localhost:80/pRESTige-master/api/procedures/customer_package',
       data: $scope.user
 
     }).then(function successCallback(response) {
@@ -55,7 +55,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/procedures/try/' + $scope.user.dietitian_id,
+      url: 'http://localhost:80/pRESTige-master/api/procedures/customer_package/' + $scope.user.dietitian_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
@@ -78,7 +78,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/procedures/try/' + user.dietitian_id
+      url: 'http://localhost:80/pRESTige-master/api/procedures/customer_package/' + user.dietitian_id
 
     }).then(function successCallback(response) {
 

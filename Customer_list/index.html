@@ -11,44 +11,94 @@
 
   <body class="container" ng-app="myApp" ng-controller="studentController" ng-cloak>
     
-    <h1>User</h1>
+    <h1>Customer List</h1>
     
     <!--Form-->
-   
+    <form ng-submit="createUser()">
+      <!-- <h4>Add Customer</h4> -->
+      <div class="form-group">
+        <label class="control-label col-md-2">Individual</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.isIndividual" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Select Group</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.group_name" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Select package</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.package_code" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Name</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.customer_name" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Email</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.customer_email" placeholder="" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="control-label col-md-2">Mobile Number</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.customer_mobileno" placeholder="" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-md-2">Gender</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.gender" placeholder="" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="control-label col-md-2">Created On</label>
+        <div class="col-md-4">
+            <input type="text" class="form-control" ng-model="user.created_on" placeholder="" />
+        </div>
+      </div>
+
+      <div class="col-md-offset-2 col-md-10">
+      <input type="submit" value="submit" class="btn  btn-sm" ng-show="submit" />    
+      <input type="button" value="update" ng-click="updateUser()" class="btn btn-default btn-sm" ng-show="update" />    
+      <input type="button" value="cancel" ng-click="cancelUpdate()" class="btn btn-default btn-sm" ng-show="cancel"/>    
+      </div>
+    </form>
     <!--End Form-->
     
     <!--Users List-->
     <br />
-    <h4>Users List</h4>
+    <h4>Customer Import </h4>
     <table class="table table-striped">
       <thead>
         <tr>
-          
-          <td>Name</td>
-          <td>Email</td>
-          <td>Contact No</td>
-          <td>City</td>
-          <td>DOB</td>
-          <td>Gender</td>
-          <td>Height</td>
-          <td>Weight</td>
-          <td>Activity</td>
-          <td>Dietery Habits</td>
+          <td>Batch No</td>
+          <td>Package</td>
+          <td>Group Name</td>
+          <td>Created On</td>
+          <td>Total Count</td>
+         
+         
         </tr>
       </thead>
       <tbody>
         <tr ng-repeat="user in users">
-          <td>{{user.customer_name}}</td>
-          <td>{{user.customer_email}}</td>
-          <td>{{user.customer_contactno}}</td>
-          <td>{{user.city}}</td>
-          <td>{{user.birth_date}}</td>
-          <td>{{user.gender}}</td>
-          <td>{{user.height}}</td>
-          <td>{{user.weight}}</td>
-          <td>{{user.activity}}</td>
-          <td>{{user.dietary_habits	}}</td>  
+          <td></td>
+          <td>{{user.package_code}}</td>
+          <td>{{user.group_name}}</td>
+          <td>{{user.created_on}}</td>
+          <td></td>
           <td>
+
             <button class="btn btn-default btn-sm" ng-click="editUser(user)">Edit</button>
             <button class="btn btn-default btn-sm" ng-click="deleteUser(user)">Delete</button>
           </td>

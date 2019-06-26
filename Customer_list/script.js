@@ -11,7 +11,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
   //$http GET function
   $http({
     method: 'GET',
-    url: 'http://localhost:80/pRESTige-master/api/customer_signups'
+    url: 'http://localhost:80/pRESTige-master/api/cus_imports'
 
   }).then(function successCallback(response) {
 
@@ -19,7 +19,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
 
   }, function errorCallback(response) {
 
-    alert("Error. Try Again!");
+    alert("Error. Please Try Again!");
 
   });
 
@@ -31,17 +31,17 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'POST',
-      url: 'http://localhost:80/pRESTige-master/api/customer_signups',
+      url: 'http://localhost:80/pRESTige-master/api/cus_imports',
       data: $scope.user
 
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("User has created Successfully")
+      alert("Package has been created Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while created user Try Again!");
+      alert("Error. Please Try Again!");
 
     });
 
@@ -55,16 +55,16 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'PUT',
-      url: 'http://localhost:80/pRESTige-master/api/customer_signups/' + $scope.user.customer_id,
+      url: 'http://localhost:80/pRESTige-master/api/cus_imports/' + $scope.user.package_id,
       data: $scope.user
 
     }).then(function successCallback(response) {
 
-      alert("User has updated Successfully")
+      alert("Package has been updated Successfully")
 
     }, function errorCallback(response) {
 
-      alert("Error. while updating user Try Again!");
+      alert("Error while updating package. Please Try Again!");
 
     });
 
@@ -78,17 +78,17 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $http({
 
       method: 'DELETE',
-      url: 'http://localhost:80/pRESTige-master/api/customer_signups/' + user.customer_id
+      url: 'http://localhost:80/pRESTige-master/api/cus_imports/' + user.package_id
 
     }).then(function successCallback(response) {
 
-      alert("User has deleted Successfully");
+      alert("Package has been deleted Successfully");
       var index = $scope.users.indexOf(user);
       $scope.users.splice(index, 1);
 
     }, function errorCallback(response) {
 
-      alert("Error. while deleting user Try Again!");
+      alert("Error. while deleting Group. Please Try Again!");
 
     });
 
@@ -115,7 +115,7 @@ myApp.controller('studentController', ['$scope', '$http', function($scope, $http
     $scope.userid = true;
   };
 
-  
+ 
 
 
 }]);
