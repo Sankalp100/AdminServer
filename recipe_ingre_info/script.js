@@ -1,11 +1,11 @@
 (function() {
 
-    angular.module('app4').controller('planController', planController);
+    angular.module('app4').controller('recipeIngController', recipeIngController);
     
-    planController.$inject = ['$scope', '$http'];
+    recipeIngController.$inject = ['$scope', '$http'];
     
     
-    function planController($scope, $http) {
+    function recipeIngController($scope, $http) {
     
       //Buttons Settings
       $scope.submit = true;

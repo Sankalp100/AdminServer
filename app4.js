@@ -47,6 +47,11 @@ app4.config(['$stateProvider', function($stateProvider){
     templateUrl: "Recipe/recipe.html",
     controller: "recipeController"
   })
+  .state('RecipeIngreInfo',{
+    url: '/RecipeIngreInfo',
+    templateUrl: "recipe_ingre_info/index.html",
+    controller: "recipeIngController"
+  })
   .state('Ingredients',{
     url: '/Ingredients',
     templateUrl: "ingredients/index.html",
