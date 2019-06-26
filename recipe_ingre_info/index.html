@@ -81,7 +81,7 @@
   <table class="table table-striped">
     <thead>
       <tr>
-        <td>No</td>
+        <!-- <td>No</td> -->
         <td>Ingredients</td>
         <td>Unit</td>
         <td>Ingredient Qty</td>
@@ -117,14 +117,14 @@
     </thead>
     <tbody>
       <tr ng-repeat="user in users">
-        <td>{{user.reci_ingreinfo_id}}</td>
-        <td>{{user.food_code}}</td>
-        <td>{{user.uom_name}}</td>
+        <!-- <td>{{user.reci_ingreinfo_id}}</td> -->
+        <td>{{user.food_code.food_code}}</td>
+        <td>{{user.uom_name.uom_name}}</td>
         <td>{{user.ingredient_qty}}</td>
         <td>{{user.cooking_measurements}}</td>
         <td>{{user.serving_measurements}}</td>
         <td>{{user.qty}}</td>
-        <td>{{user.exchange_value}}</td>
+        <td>{{user.exchanges_per_amount}}</td>
         <td>{{user.energy_kj}}</td>
         <td>{{user.energy_kcal}}</td>
         <td>{{user.carbohydrate}}</td>
