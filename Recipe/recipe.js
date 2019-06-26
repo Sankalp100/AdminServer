@@ -42,7 +42,7 @@
     }).then(function successCallback(response) {
 
       $scope.users.push(response.data);
-      alert("Recipe has added Successfully")
+      console.log("Recipe has added Successfully");
 
     }, function errorCallback(response) {
 
