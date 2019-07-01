@@ -1,4 +1,7 @@
-SET new.qty = (new.serving_measurements * new.ingredient_qty / new.cooking_measurements),
+SET  new.qty = ( ( SELECT serving_measurements FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id) * ( SELECT ingredient_qty FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id) / ( SELECT cooking_measurements FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id) ) ,
+
+
+
 new.food_group = (SELECT food_group FROM  ingredients WHERE food_code  = new.food_code),
 new.exchanges_per_amount =  ( (new.qty) / (SELECT one_exchange FROM ingredients WHERE food_code  = new.food_code) ), 
 

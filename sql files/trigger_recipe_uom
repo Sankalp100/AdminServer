@@ -1,4 +1,7 @@
-SET new.energy_kj = (SELECT energy_kj FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.rec_uom_value) / (SELECT qty FROM total_recipe WHERE recipe_id = new.recipe_id),
+SET new.exchanges_per_amount = (SELECT exchanges_per_amount FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.rec_uom_value) / (SELECT qty FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+
+new.energy_kj = (SELECT energy_kj FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.rec_uom_value) / (SELECT qty FROM total_recipe WHERE recipe_id = new.recipe_id),
 
 
 new.energy_kcal = (SELECT energy_kcal FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.rec_uom_value) / (SELECT qty FROM total_recipe WHERE recipe_id = new.recipe_id),

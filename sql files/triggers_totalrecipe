@@ -1,51 +1,56 @@
-SET new.ingredient_qty = (Select SUM(ingredient_qty) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+SET new.uom_name = (SELECT uom_name FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
 
-new.qty = (Select SUM(qty) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.exchanges_per_amount = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.uom_value = (SELECT uom_value FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
 
-new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.energy_kcal = (Select SUM(energy_kcal) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
 
-new.carbohydrate = (Select SUM(carbohydrate) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.protein = (Select SUM(protein) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.ingredient_qty = (Select SUM(ingredient_qty) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.total_fibre = (Select SUM(total_fibre) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.solublf = (Select SUM(solublf) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.qty = (Select SUM(qty) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.exchanges_per_amount = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.in_solublf = (Select SUM(in_solublf) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.invisible_totalfat = (Select SUM(invisible_totalfat) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.energy_kcal = (Select SUM(energy_kcal) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.visiblefat = (Select SUM(visiblefat) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.thiamine = (Select SUM(thiamine) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.carbohydrate = (Select SUM(carbohydrate) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.protein = (Select SUM(protein) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.riboflavin = (Select SUM(riboflavin) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.niacin = (Select SUM(niacin) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.total_fibre = (Select SUM(total_fibre) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.solublf = (Select SUM(solublf) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.biotin = (Select SUM(biotin) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.folates = (Select SUM(folates) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.in_solublf = (Select SUM(in_solublf) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.invisible_totalfat = (Select SUM(invisible_totalfat) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.ascorbic_Acid = (Select SUM(ascorbic_Acid) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.vitamin_d2d3 = (Select SUM(vitamin_d2d3) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.visiblefat = (Select SUM(visiblefat) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.thiamine = (Select SUM(thiamine) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.calcium = (Select SUM(calcium) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.phosphorous = (Select SUM(phosphorous) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.riboflavin = (Select SUM(riboflavin) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.niacin = (Select SUM(niacin) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.iron = (Select SUM(iron) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.sodium = (Select SUM(sodium) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.biotin = (Select SUM(biotin) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.folates = (Select SUM(folates) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.potassium = (Select SUM(potassium) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.zinc = (Select SUM(zinc) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.ascorbic_Acid = (Select SUM(ascorbic_Acid) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.vitamin_d2d3 = (Select SUM(vitamin_d2d3) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.magnesium = (Select SUM(magnesium) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
-new.sfa = (Select SUM(sfa) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+new.calcium = (Select SUM(calcium) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.phosphorous = (Select SUM(phosphorous) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.Cereal = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id AND food_group = 'Cereal'),
+new.iron = (Select SUM(iron) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.sodium = (Select SUM(sodium) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
-new.Fat = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id AND food_group = 'Fat'),
-new.fruits = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id AND food_group = 'fruits'),
-new.milk = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id AND food_group = 'milk and milk product'),
-new.Nuts = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id AND food_group = 'Nuts & Oil Seeds'),
-new.pulses = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id AND food_group = 'pulses and legumes'),
-new.sugar = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id AND food_group = 'sugar'),
-new.vegetables = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id AND food_group = 'vegetables'),
-new.Water = (Select SUM(exchanges_per_amount) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id AND food_group = 'Water');
+new.potassium = (Select SUM(potassium) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.zinc = (Select SUM(zinc) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.magnesium = (Select SUM(magnesium) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.sfa = (Select SUM(sfa) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.Cereal = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Cereal'),
+
+new.Fat = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Fat'),
+new.fruits = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'fruits'),
+new.milk = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'milk and milk product'),
+new.Nuts = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Nuts & Oil Seeds'),
+new.pulses = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'pulses and legumes'),
+new.sugar = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'sugar'),
+new.vegetables = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'vegetables'),
+new.Water = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Water');
