@@ -1,6 +1,7 @@
 IF ((new.rec_uom_name = 'Gram' OR new.rec_uom_name = 'ML') AND new.rec_uom_value = 1) THEN
 
         SET new.serving_measurements = 1 ,
+        new.rec_name = (SELECT recipe_name FROM recipes WHERE recipe_id = new.recipe_id),
         new.energy_kj = (SELECT energy_kj FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
         new.energy_kcal = (SELECT energy_kcal FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
         new.carbohydrate = (SELECT carbohydrate FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
@@ -50,6 +51,7 @@ IF ((new.rec_uom_name = 'Gram' OR new.rec_uom_name = 'ML') AND new.rec_uom_value
 ELSE        
         SET new.serving_measurements = (new.rec_uom_value) * (SELECT serving_measurements FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id) / (SELECT uom_value FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id ),
 
+         new.rec_name = (SELECT recipe_name FROM recipes WHERE recipe_id = new.recipe_id),
         new.energy_kj = (SELECT energy_kj FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
         new.energy_kcal = (SELECT energy_kcal FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
         new.carbohydrate = (SELECT carbohydrate FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
