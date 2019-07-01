@@ -2,6 +2,7 @@ SET new.uom_name = (SELECT uom_name FROM recipe_ingreinfo WHERE recipe_id = new.
 
 new.uom_value = (SELECT uom_value FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
 
+new.serving_measurements = (SELECT serving_measurements FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
 
 new.ingredient_qty = (Select SUM(ingredient_qty) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
 
