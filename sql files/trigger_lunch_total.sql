@@ -1,0 +1,15 @@
+SET new.energy = (SELECT SUM(energy) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM lunch_details WHERE (code = new.code) AND (date = new.date));
+

@@ -1,0 +1,15 @@
+SET new.energy = (SELECT SUM(energy) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date));
+
