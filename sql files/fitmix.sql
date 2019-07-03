@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2019 at 02:53 PM
+-- Generation Time: Jul 03, 2019 at 09:34 AM
 -- Server version: 10.1.40-MariaDB
 -- PHP Version: 7.1.29
 
@@ -19,15 +19,124 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `fitmix1`
+-- Database: `fitmix`
 --
+CREATE DATABASE IF NOT EXISTS `fitmix` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `fitmix`;
 
 DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`` PROCEDURE `customer_package` ()  SELECT cus_imports.customer_name , cus_imports.customer_email , cus_imports.customer_mobileno , cus_imports.gender , cus_imports.created_on , packages.dietitian_name , packages.package_name FROM cus_imports INNER JOIN packages ON cus_imports.package_code = packages.package_code$$$$
+DROP PROCEDURE IF EXISTS `customer_package`$$
+CREATE DEFINER=`` PROCEDURE `customer_package` ()  SELECT cus_imports.customer_name , cus_imports.customer_email , cus_imports.customer_mobileno , cus_imports.gender , cus_imports.created_on , packages.dietitian_name , packages.package_name FROM cus_imports INNER JOIN packages ON cus_imports.package_code = packages.package_code$$
 
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admindiet_total`
+--
+-- Creation: Jul 02, 2019 at 08:41 AM
+--
+
+DROP TABLE IF EXISTS `admindiet_total`;
+CREATE TABLE `admindiet_total` (
+  `admindiet_total` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `admindiet_total`:
+--   `code`
+--       `admin_diets` -> `code`
+--
+
+--
+-- Truncate table before insert `admindiet_total`
+--
+
+TRUNCATE TABLE `admindiet_total`;
+--
+-- Triggers `admindiet_total`
+--
+DROP TRIGGER IF EXISTS `admindiet_total_bi`;
+DELIMITER $$
+CREATE TRIGGER `admindiet_total_bi` BEFORE INSERT ON `admindiet_total` FOR EACH ROW SET new.energy = (SELECT energy from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.carbs = (SELECT carbs from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.proteins = (SELECT proteins from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.fats = (SELECT fats from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.fibres = (SELECT fibres from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.Cereal = (SELECT Cereal from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.Fat = (SELECT Fat from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.fruits = (SELECT fruits from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.milk = (SELECT milk from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.Nuts = (SELECT Nuts from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.pulses = (SELECT pulses from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.sugar = (SELECT sugar from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.vegetables = (SELECT vegetables from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.Water = (SELECT Water from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from post_dinner_total WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `admindiet_total_bu`;
+DELIMITER $$
+CREATE TRIGGER `admindiet_total_bu` BEFORE UPDATE ON `admindiet_total` FOR EACH ROW SET new.energy = (SELECT energy from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT energy from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.carbs = (SELECT carbs from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT carbs from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.proteins = (SELECT proteins from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT proteins from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.fats = (SELECT fats from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fats from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.fibres = (SELECT fibres from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fibres from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.Cereal = (SELECT Cereal from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Cereal from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.Fat = (SELECT Fat from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Fat from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.fruits = (SELECT fruits from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT fruits from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.milk = (SELECT milk from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT milk from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.Nuts = (SELECT Nuts from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Nuts from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.pulses = (SELECT pulses from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT pulses from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.sugar = (SELECT sugar from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT sugar from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.vegetables = (SELECT vegetables from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT vegetables from post_dinner_total WHERE (code = new.code) AND (date = new.date)) ,
+
+new.Water = (SELECT Water from earlymorning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from breakfast_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from mid_morning_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from lunch_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from evening_snack_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from dinner_total WHERE (code = new.code) AND (date = new.date)) + (SELECT Water from post_dinner_total WHERE (code = new.code) AND (date = new.date))
+$$
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -35,32 +144,268 @@ DELIMITER ;
 --
 -- Table structure for table `admin_diets`
 --
+-- Creation: Jul 02, 2019 at 07:18 AM
+--
 
+DROP TABLE IF EXISTS `admin_diets`;
 CREATE TABLE `admin_diets` (
   `admindiet_id` int(11) NOT NULL,
   `code` varchar(255) NOT NULL,
-  `date` date NOT NULL,
-  `energy` float NOT NULL,
-  `carbs` float NOT NULL,
-  `proteins` float NOT NULL,
-  `fats` float NOT NULL,
-  `fibres` float NOT NULL,
-  `cereals` float NOT NULL,
-  `fat` float NOT NULL,
-  `fruits` float NOT NULL,
-  `milk_prods` float NOT NULL,
-  `pulses` float NOT NULL,
-  `sugars` float NOT NULL,
-  `vegetable` float NOT NULL,
-  `water` float NOT NULL
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `admin_diets`:
+--
+
+--
+-- Truncate table before insert `admin_diets`
+--
+
+TRUNCATE TABLE `admin_diets`;
+--
+-- Dumping data for table `admin_diets`
+--
+
+INSERT INTO `admin_diets` (`admindiet_id`, `code`, `date`) VALUES
+(1, 'FMC001', '2019-07-01'),
+(2, 'FMC001', '2019-07-02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `breakfast_details`
+--
+-- Creation: Jul 02, 2019 at 08:16 AM
+--
+
+DROP TABLE IF EXISTS `breakfast_details`;
+CREATE TABLE `breakfast_details` (
+  `breakfast_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `recipe_name` varchar(255) NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `qty` float NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `breakfast_details`:
+--   `code`
+--       `admin_diets` -> `code`
+--   `recipe_name`
+--       `recipes` -> `recipe_name`
+--
+
+--
+-- Truncate table before insert `breakfast_details`
+--
+
+TRUNCATE TABLE `breakfast_details`;
+--
+-- Dumping data for table `breakfast_details`
+--
+
+INSERT INTO `breakfast_details` (`breakfast_id`, `code`, `date`, `recipe_name`, `unit`, `qty`, `energy`, `carbs`, `proteins`, `fats`, `fibres`, `Cereal`, `Fat`, `fruits`, `milk`, `Nuts`, `pulses`, `sugar`, `vegetables`, `Water`) VALUES
+(1, 'FMC001', '2019-07-01', 'Vegetable poha', 'Cup', 0.75, 173.537, 32.8137, 3.3273, 2.25, 2.1201, 1.875, 0.45, 0.0225, NULL, NULL, NULL, 0.45, 0.36, NULL),
+(2, 'FMC001', '2019-07-01', 'Gajar raita', 'Cup', 1, 131.898, 7.223, 4.06, 5, 3.414, NULL, 1, NULL, 0.4, NULL, NULL, NULL, 0.8, NULL);
+
+--
+-- Triggers `breakfast_details`
+--
+DROP TRIGGER IF EXISTS `breakfast_details_bi`;
+DELIMITER $$
+CREATE TRIGGER `breakfast_details_bi` BEFORE INSERT ON `breakfast_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `breakfast_details_bu`;
+DELIMITER $$
+CREATE TRIGGER `breakfast_details_bu` BEFORE UPDATE ON `breakfast_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `breakfast_total`
+--
+-- Creation: Jul 02, 2019 at 02:27 PM
+--
+
+DROP TABLE IF EXISTS `breakfast_total`;
+CREATE TABLE `breakfast_total` (
+  `breakfast_total_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `breakfast_total`:
+--   `code`
+--       `breakfast_details` -> `code`
+--
+
+--
+-- Truncate table before insert `breakfast_total`
+--
+
+TRUNCATE TABLE `breakfast_total`;
+--
+-- Triggers `breakfast_total`
+--
+DROP TRIGGER IF EXISTS `breakfast_total_bi`;
+DELIMITER $$
+CREATE TRIGGER `breakfast_total_bi` BEFORE INSERT ON `breakfast_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM breakfast_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `breakfast_total_bu`;
+DELIMITER $$
+CREATE TRIGGER `breakfast_total_bu` BEFORE UPDATE ON `breakfast_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM breakfast_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM breakfast_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `categories`
 --
+-- Creation: Jun 20, 2019 at 02:14 PM
+--
 
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
@@ -69,13 +414,28 @@ CREATE TABLE `categories` (
   `category_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELATIONSHIPS FOR TABLE `categories`:
+--   `category_id`
+--       `categories` -> `id`
+--
+
+--
+-- Truncate table before insert `categories`
+--
+
+TRUNCATE TABLE `categories`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `customer_signups`
 --
+-- Creation: Jul 03, 2019 at 07:02 AM
+--
 
+DROP TABLE IF EXISTS `customer_signups`;
 CREATE TABLE `customer_signups` (
+  `id` int(11) NOT NULL,
   `customer_id` varchar(255) NOT NULL,
   `customer_name` varchar(255) NOT NULL,
   `customer_email` varchar(255) NOT NULL,
@@ -83,26 +443,41 @@ CREATE TABLE `customer_signups` (
   `city` varchar(255) NOT NULL,
   `birth_date` date NOT NULL,
   `gender` varchar(255) NOT NULL,
+  `height_measurement` varchar(255) NOT NULL,
   `height` decimal(10,0) NOT NULL,
+  `weight_measurement` varchar(255) NOT NULL,
   `weight` decimal(10,0) NOT NULL,
   `activity` varchar(255) NOT NULL,
   `dietary_habits` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELATIONSHIPS FOR TABLE `customer_signups`:
+--
+
+--
+-- Truncate table before insert `customer_signups`
+--
+
+TRUNCATE TABLE `customer_signups`;
+--
 -- Dumping data for table `customer_signups`
 --
 
-INSERT INTO `customer_signups` (`customer_id`, `customer_name`, `customer_email`, `customer_contactno`, `city`, `birth_date`, `gender`, `height`, `weight`, `activity`, `dietary_habits`) VALUES
-('FMC001', '', 'ggj.nivas.18@gmail.com', 8790988099, 'Bapatla', '1998-11-08', 'Male', '172', '80', 'sedentary', 'eggetarian');
+INSERT INTO `customer_signups` (`id`, `customer_id`, `customer_name`, `customer_email`, `customer_contactno`, `city`, `birth_date`, `gender`, `height_measurement`, `height`, `weight_measurement`, `weight`, `activity`, `dietary_habits`) VALUES
+(1, 'FMC001', 'Nivas', 'ggj.nivas.18@gmail.com', 8790988099, 'Bapatla', '1998-11-08', 'Male', '', '172', '', '80', 'sedentary', 'eggetarian');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `cus_groups`
 --
+-- Creation: Jul 01, 2019 at 08:51 AM
+--
 
+DROP TABLE IF EXISTS `cus_groups`;
 CREATE TABLE `cus_groups` (
+  `id` int(11) NOT NULL,
   `group_code` varchar(255) NOT NULL,
   `group_name` varchar(255) NOT NULL,
   `dietitian_name` varchar(255) NOT NULL,
@@ -110,22 +485,36 @@ CREATE TABLE `cus_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELATIONSHIPS FOR TABLE `cus_groups`:
+--   `dietitian_name`
+--       `dietitians` -> `dietitian_name`
+--
+
+--
+-- Truncate table before insert `cus_groups`
+--
+
+TRUNCATE TABLE `cus_groups`;
+--
 -- Dumping data for table `cus_groups`
 --
 
-INSERT INTO `cus_groups` (`group_code`, `group_name`, `dietitian_name`, `isActive`) VALUES
-('GROUP1', 'NNC MALE VEGETARIAN', 'Neha Nutrition Center', 'TRUE'),
-('GROUP2', 'NNC FEMALLE VEGETARIAN', 'Neha Nutrition Center', 'TRUE'),
-('GROUP3', 'NNC male eggetarian', 'Neha Nutrition Center', 'TRUE');
+INSERT INTO `cus_groups` (`id`, `group_code`, `group_name`, `dietitian_name`, `isActive`) VALUES
+(1, 'GROUP1', 'NNC MALE VEGETARIAN', 'Neha Nutrition Center', 'TRUE'),
+(2, 'GROUP2', 'NNC FEMALLE VEGETARIAN', 'Neha Nutrition Center', 'TRUE'),
+(3, 'GROUP3', 'NNC male eggetarian', 'Neha Nutrition Center', 'TRUE');
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `cus_imports`
 --
+-- Creation: Jul 01, 2019 at 08:45 AM
+--
 
+DROP TABLE IF EXISTS `cus_imports`;
 CREATE TABLE `cus_imports` (
-  `cusimport_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
   `customer_id` varchar(255) NOT NULL,
   `isIndividual` varchar(255) NOT NULL,
   `group_name` varchar(255) NOT NULL,
@@ -137,12 +526,30 @@ CREATE TABLE `cus_imports` (
   `created_on` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELATIONSHIPS FOR TABLE `cus_imports`:
+--   `customer_id`
+--       `customer_signups` -> `customer_id`
+--   `package_code`
+--       `packages` -> `package_code`
+--   `package_code`
+--       `packages` -> `package_code`
+--
+
+--
+-- Truncate table before insert `cus_imports`
+--
+
+TRUNCATE TABLE `cus_imports`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `dietitians`
 --
+-- Creation: Jun 21, 2019 at 11:21 AM
+--
 
+DROP TABLE IF EXISTS `dietitians`;
 CREATE TABLE `dietitians` (
   `dietitian_id` int(255) NOT NULL,
   `dietitian_name` varchar(255) NOT NULL,
@@ -160,6 +567,21 @@ CREATE TABLE `dietitians` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- MIME TYPES FOR TABLE `dietitians`:
+--   `upload_photo`
+--       `Image_JPEG`
+--
+
+--
+-- RELATIONSHIPS FOR TABLE `dietitians`:
+--
+
+--
+-- Truncate table before insert `dietitians`
+--
+
+TRUNCATE TABLE `dietitians`;
+--
 -- Dumping data for table `dietitians`
 --
 
@@ -170,41 +592,704 @@ INSERT INTO `dietitians` (`dietitian_id`, `dietitian_name`, `qualification`, `di
 -- --------------------------------------------------------
 
 --
--- Table structure for table `diet_details`
+-- Table structure for table `dinner_details`
+--
+-- Creation: Jul 02, 2019 at 08:18 AM
 --
 
-CREATE TABLE `diet_details` (
-  `dietdetails_id` bigint(100) NOT NULL,
+DROP TABLE IF EXISTS `dinner_details`;
+CREATE TABLE `dinner_details` (
+  `dinner_id` bigint(10) NOT NULL,
   `code` varchar(255) NOT NULL,
   `date` date NOT NULL,
-  `diet_type` varchar(255) NOT NULL,
   `recipe_name` varchar(255) NOT NULL,
   `unit` varchar(255) NOT NULL,
-  `qty` int(10) NOT NULL,
-  `energy` float NOT NULL,
-  `carbs` float NOT NULL,
-  `proteins` float NOT NULL,
-  `fats` float NOT NULL,
-  `fibres` float NOT NULL
+  `qty` float NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `dinner_details`:
+--   `code`
+--       `admin_diets` -> `code`
+--   `recipe_name`
+--       `recipes` -> `recipe_name`
+--
+
+--
+-- Truncate table before insert `dinner_details`
+--
+
+TRUNCATE TABLE `dinner_details`;
+--
+-- Triggers `dinner_details`
+--
+DROP TRIGGER IF EXISTS `dinner_details_bi`;
+DELIMITER $$
+CREATE TRIGGER `dinner_details_bi` BEFORE INSERT ON `dinner_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `dinner_details_bu`;
+DELIMITER $$
+CREATE TRIGGER `dinner_details_bu` BEFORE UPDATE ON `dinner_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dinner_total`
+--
+-- Creation: Jul 02, 2019 at 02:34 PM
+--
+
+DROP TABLE IF EXISTS `dinner_total`;
+CREATE TABLE `dinner_total` (
+  `dinner_total_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `dinner_total`:
+--   `code`
+--       `dinner_details` -> `code`
+--
+
+--
+-- Truncate table before insert `dinner_total`
+--
+
+TRUNCATE TABLE `dinner_total`;
+--
+-- Triggers `dinner_total`
+--
+DROP TRIGGER IF EXISTS `dinner_total_bi`;
+DELIMITER $$
+CREATE TRIGGER `dinner_total_bi` BEFORE INSERT ON `dinner_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM dinner_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `dinner_total_bu`;
+DELIMITER $$
+CREATE TRIGGER `dinner_total_bu` BEFORE UPDATE ON `dinner_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM dinner_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `earlymorning_total`
+--
+-- Creation: Jul 02, 2019 at 02:15 PM
+--
+
+DROP TABLE IF EXISTS `earlymorning_total`;
+CREATE TABLE `earlymorning_total` (
+  `earlymorning_total_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `earlymorning_total`:
+--   `code`
+--       `early_morning_details` -> `code`
+--
+
+--
+-- Truncate table before insert `earlymorning_total`
+--
+
+TRUNCATE TABLE `earlymorning_total`;
+--
+-- Dumping data for table `earlymorning_total`
+--
+
+INSERT INTO `earlymorning_total` (`earlymorning_total_id`, `code`, `date`, `time`, `energy`, `carbs`, `proteins`, `fats`, `fibres`, `Cereal`, `Fat`, `fruits`, `milk`, `Nuts`, `pulses`, `sugar`, `vegetables`, `Water`) VALUES
+(3, 'FMC001', '2019-07-01', '06:00:00', 79.9956, 17.4108, 1.2292, 0, 1.78, NULL, NULL, 0.8, NULL, NULL, NULL, NULL, 0.08, 0.2);
+
+--
+-- Triggers `earlymorning_total`
+--
+DROP TRIGGER IF EXISTS `earlymorning_total_bi`;
+DELIMITER $$
+CREATE TRIGGER `earlymorning_total_bi` BEFORE INSERT ON `earlymorning_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM early_morning_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `earlymorning_total_bu`;
+DELIMITER $$
+CREATE TRIGGER `earlymorning_total_bu` BEFORE UPDATE ON `earlymorning_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM early_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM early_morning_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `early_morning_details`
+--
+-- Creation: Jul 02, 2019 at 07:49 AM
+--
+
+DROP TABLE IF EXISTS `early_morning_details`;
+CREATE TABLE `early_morning_details` (
+  `earlymorning_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `recipe_name` varchar(255) NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `qty` float NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `early_morning_details`:
+--   `code`
+--       `admin_diets` -> `code`
+--   `recipe_name`
+--       `recipes` -> `recipe_name`
+--
+
+--
+-- Truncate table before insert `early_morning_details`
+--
+
+TRUNCATE TABLE `early_morning_details`;
+--
+-- Dumping data for table `early_morning_details`
+--
+
+INSERT INTO `early_morning_details` (`earlymorning_id`, `code`, `date`, `recipe_name`, `unit`, `qty`, `energy`, `carbs`, `proteins`, `fats`, `fibres`, `Cereal`, `Fat`, `fruits`, `milk`, `Nuts`, `pulses`, `sugar`, `vegetables`, `Water`) VALUES
+(2, 'FMC001', '2019-07-01', 'Lemon water without sugar and salt', 'ML Glass', 200, 6.38148, 0.8698, 0.3682, 0, 0.422, NULL, NULL, 0.1, NULL, NULL, NULL, NULL, 0.08, 0.2),
+(3, 'FMC001', '2019-07-01', 'Banana', 'Medium', 1, 73.6141, 16.541, 0.861, 0, 1.358, NULL, NULL, 0.7, NULL, NULL, NULL, NULL, NULL, NULL);
+
+--
+-- Triggers `early_morning_details`
+--
+DROP TRIGGER IF EXISTS `early_morning_details_bi`;
+DELIMITER $$
+CREATE TRIGGER `early_morning_details_bi` BEFORE INSERT ON `early_morning_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `early_morning_details_bu`;
+DELIMITER $$
+CREATE TRIGGER `early_morning_details_bu` BEFORE UPDATE ON `early_morning_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `evening_snack_details`
+--
+-- Creation: Jul 02, 2019 at 08:18 AM
+--
+
+DROP TABLE IF EXISTS `evening_snack_details`;
+CREATE TABLE `evening_snack_details` (
+  `evening_snack_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `recipe_name` varchar(255) NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `qty` float NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `evening_snack_details`:
+--   `code`
+--       `admin_diets` -> `code`
+--   `recipe_name`
+--       `recipes` -> `recipe_name`
+--
+
+--
+-- Truncate table before insert `evening_snack_details`
+--
+
+TRUNCATE TABLE `evening_snack_details`;
+--
+-- Triggers `evening_snack_details`
+--
+DROP TRIGGER IF EXISTS `evening_snack_details_bi`;
+DELIMITER $$
+CREATE TRIGGER `evening_snack_details_bi` BEFORE INSERT ON `evening_snack_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `evening_snack_details_bu`;
+DELIMITER $$
+CREATE TRIGGER `evening_snack_details_bu` BEFORE UPDATE ON `evening_snack_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `evening_snack_total`
+--
+-- Creation: Jul 02, 2019 at 02:32 PM
+--
+
+DROP TABLE IF EXISTS `evening_snack_total`;
+CREATE TABLE `evening_snack_total` (
+  `evening_snack_total_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `evening_snack_total`:
+--   `code`
+--       `evening_snack_details` -> `code`
+--
+
+--
+-- Truncate table before insert `evening_snack_total`
+--
+
+TRUNCATE TABLE `evening_snack_total`;
+--
+-- Triggers `evening_snack_total`
+--
+DROP TRIGGER IF EXISTS `evening_snack_total_bi`;
+DELIMITER $$
+CREATE TRIGGER `evening_snack_total_bi` BEFORE INSERT ON `evening_snack_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `evening_snack_total_bu`;
+DELIMITER $$
+CREATE TRIGGER `evening_snack_total_bu` BEFORE UPDATE ON `evening_snack_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM evening_snack_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `files`
 --
+-- Creation: Jun 20, 2019 at 02:14 PM
+--
 
+DROP TABLE IF EXISTS `files`;
 CREATE TABLE `files` (
   `id` int(11) NOT NULL,
   `file` varchar(512) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELATIONSHIPS FOR TABLE `files`:
+--
+
+--
+-- Truncate table before insert `files`
+--
+
+TRUNCATE TABLE `files`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `groups`
 --
+-- Creation: Jun 20, 2019 at 02:14 PM
+--
 
+DROP TABLE IF EXISTS `groups`;
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
@@ -212,12 +1297,24 @@ CREATE TABLE `groups` (
   `secret` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELATIONSHIPS FOR TABLE `groups`:
+--
+
+--
+-- Truncate table before insert `groups`
+--
+
+TRUNCATE TABLE `groups`;
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `ingredients`
 --
+-- Creation: Jun 26, 2019 at 12:44 PM
+--
 
+DROP TABLE IF EXISTS `ingredients`;
 CREATE TABLE `ingredients` (
   `ingredient_id` int(11) NOT NULL,
   `ingrediant_type` varchar(255) NOT NULL,
@@ -256,6 +1353,15 @@ CREATE TABLE `ingredients` (
   `isActive` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELATIONSHIPS FOR TABLE `ingredients`:
+--
+
+--
+-- Truncate table before insert `ingredients`
+--
+
+TRUNCATE TABLE `ingredients`;
 --
 -- Dumping data for table `ingredients`
 --
@@ -830,9 +1936,455 @@ INSERT INTO `ingredients` (`ingredient_id`, `ingrediant_type`, `food_group`, `fo
 -- --------------------------------------------------------
 
 --
--- Table structure for table `organizations`
+-- Table structure for table `lunch_details`
+--
+-- Creation: Jul 02, 2019 at 08:17 AM
 --
 
+DROP TABLE IF EXISTS `lunch_details`;
+CREATE TABLE `lunch_details` (
+  `lunch_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `recipe_name` varchar(255) NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `qty` float NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `lunch_details`:
+--   `code`
+--       `admin_diets` -> `code`
+--   `recipe_name`
+--       `recipes` -> `recipe_name`
+--
+
+--
+-- Truncate table before insert `lunch_details`
+--
+
+TRUNCATE TABLE `lunch_details`;
+--
+-- Triggers `lunch_details`
+--
+DROP TRIGGER IF EXISTS `lunch_details_bi`;
+DELIMITER $$
+CREATE TRIGGER `lunch_details_bi` BEFORE INSERT ON `lunch_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `lunch_details_bu`;
+DELIMITER $$
+CREATE TRIGGER `lunch_details_bu` BEFORE UPDATE ON `lunch_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lunch_total`
+--
+-- Creation: Jul 02, 2019 at 02:31 PM
+--
+
+DROP TABLE IF EXISTS `lunch_total`;
+CREATE TABLE `lunch_total` (
+  `lunch_total_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `lunch_total`:
+--   `code`
+--       `lunch_details` -> `code`
+--
+
+--
+-- Truncate table before insert `lunch_total`
+--
+
+TRUNCATE TABLE `lunch_total`;
+--
+-- Triggers `lunch_total`
+--
+DROP TRIGGER IF EXISTS `lunch_total_bi`;
+DELIMITER $$
+CREATE TRIGGER `lunch_total_bi` BEFORE INSERT ON `lunch_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM lunch_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `lunch_total_bu`;
+DELIMITER $$
+CREATE TRIGGER `lunch_total_bu` BEFORE UPDATE ON `lunch_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM lunch_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM lunch_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mid_morning_details`
+--
+-- Creation: Jul 02, 2019 at 08:17 AM
+--
+
+DROP TABLE IF EXISTS `mid_morning_details`;
+CREATE TABLE `mid_morning_details` (
+  `mid_morning_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `recipe_name` varchar(255) NOT NULL,
+  `unit` varchar(255) NOT NULL,
+  `qty` float NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `mid_morning_details`:
+--   `code`
+--       `admin_diets` -> `code`
+--   `recipe_name`
+--       `recipes` -> `recipe_name`
+--
+
+--
+-- Truncate table before insert `mid_morning_details`
+--
+
+TRUNCATE TABLE `mid_morning_details`;
+--
+-- Dumping data for table `mid_morning_details`
+--
+
+INSERT INTO `mid_morning_details` (`mid_morning_id`, `code`, `date`, `recipe_name`, `unit`, `qty`, `energy`, `carbs`, `proteins`, `fats`, `fibres`, `Cereal`, `Fat`, `fruits`, `milk`, `Nuts`, `pulses`, `sugar`, `vegetables`, `Water`) VALUES
+(1, 'FMC001', '2019-07-01', 'Adrak pudina tea(with sugar)', 'Tea Cup', 1, 214.46, 23.0813, 5.7242, 0, 0.3858, NULL, NULL, NULL, 0.6, NULL, NULL, 2, 0.07, 0.15);
+
+--
+-- Triggers `mid_morning_details`
+--
+DROP TRIGGER IF EXISTS `mid_morning_details_bi`;
+DELIMITER $$
+CREATE TRIGGER `mid_morning_details_bi` BEFORE INSERT ON `mid_morning_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `mid_morning_details_bu`;
+DELIMITER $$
+CREATE TRIGGER `mid_morning_details_bu` BEFORE UPDATE ON `mid_morning_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `mid_morning_total`
+--
+-- Creation: Jul 02, 2019 at 02:29 PM
+--
+
+DROP TABLE IF EXISTS `mid_morning_total`;
+CREATE TABLE `mid_morning_total` (
+  `mid_morning_total_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `mid_morning_total`:
+--   `code`
+--       `mid_morning_details` -> `code`
+--
+
+--
+-- Truncate table before insert `mid_morning_total`
+--
+
+TRUNCATE TABLE `mid_morning_total`;
+--
+-- Triggers `mid_morning_total`
+--
+DROP TRIGGER IF EXISTS `mid_morning_total_bi`;
+DELIMITER $$
+CREATE TRIGGER `mid_morning_total_bi` BEFORE INSERT ON `mid_morning_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `mid_morning_total_bu`;
+DELIMITER $$
+CREATE TRIGGER `mid_morning_total_bu` BEFORE UPDATE ON `mid_morning_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM mid_morning_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `organizations`
+--
+-- Creation: Jun 20, 2019 at 02:14 PM
+--
+
+DROP TABLE IF EXISTS `organizations`;
 CREATE TABLE `organizations` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -845,6 +2397,15 @@ CREATE TABLE `organizations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELATIONSHIPS FOR TABLE `organizations`:
+--
+
+--
+-- Truncate table before insert `organizations`
+--
+
+TRUNCATE TABLE `organizations`;
+--
 -- Dumping data for table `organizations`
 --
 
@@ -856,7 +2417,10 @@ INSERT INTO `organizations` (`id`, `name`, `email`, `license`, `validity`, `org_
 --
 -- Table structure for table `packages`
 --
+-- Creation: Jun 21, 2019 at 11:47 AM
+--
 
+DROP TABLE IF EXISTS `packages`;
 CREATE TABLE `packages` (
   `id` int(255) NOT NULL,
   `package_code` varchar(255) NOT NULL,
@@ -868,6 +2432,19 @@ CREATE TABLE `packages` (
   `description` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELATIONSHIPS FOR TABLE `packages`:
+--   `plan_name`
+--       `plans` -> `plan_name`
+--   `dietitian_name`
+--       `dietitians` -> `dietitian_name`
+--
+
+--
+-- Truncate table before insert `packages`
+--
+
+TRUNCATE TABLE `packages`;
 --
 -- Dumping data for table `packages`
 --
@@ -888,186 +2465,205 @@ INSERT INTO `packages` (`id`, `package_code`, `package_name`, `plan_name`, `diet
 --
 -- Table structure for table `picker_lists`
 --
+-- Creation: Jul 01, 2019 at 08:53 AM
+--
 
+DROP TABLE IF EXISTS `picker_lists`;
 CREATE TABLE `picker_lists` (
+  `pickerlist_id` int(11) NOT NULL,
   `uom_name` varchar(255) NOT NULL,
   `display_value` float NOT NULL,
   `picker_value` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELATIONSHIPS FOR TABLE `picker_lists`:
+--   `uom_name`
+--       `uoms` -> `uom_name`
+--
+
+--
+-- Truncate table before insert `picker_lists`
+--
+
+TRUNCATE TABLE `picker_lists`;
+--
 -- Dumping data for table `picker_lists`
 --
 
-INSERT INTO `picker_lists` (`uom_name`, `display_value`, `picker_value`) VALUES
-('Cup', 0.25, 0.25),
-('Cup', 0.5, 0.5),
-('Cup', 1, 1),
-('Cup', 1.5, 1.5),
-('Cup', 2, 2),
-('Cup', 2.5, 2.5),
-('Cup', 3, 3),
-('Cup', 3.5, 3.5),
-('Cup', 4, 4),
-('Cup', 4.5, 4.5),
-('Cup', 5, 5),
-('Cup', 0.75, 0.75),
-('Gram', 5, 5),
-('Gram', 10, 10),
-('Gram', 15, 15),
-('Gram', 20, 20),
-('Gram', 25, 25),
-('Gram', 50, 50),
-('Gram', 100, 100),
-('Gram', 150, 150),
-('Gram', 200, 200),
-('Gram', 250, 250),
-('Gram', 300, 300),
-('Gram', 350, 350),
-('Gram', 400, 400),
-('Gram', 450, 450),
-('Gram', 500, 500),
-('Gram', 75, 75),
-('Gram', 30, 30),
-('Gram', 40, 40),
-('Small', 1, 1),
-('Small', 2, 2),
-('Small', 3, 3),
-('Small', 4, 4),
-('Small', 5, 5),
-('Small', 6, 6),
-('Small', 7, 7),
-('Small', 8, 8),
-('Small', 9, 9),
-('Small', 10, 10),
-('Medium', 1, 1),
-('Medium', 2, 2),
-('Medium', 3, 3),
-('Medium', 4, 4),
-('Medium', 5, 5),
-('Medium', 6, 6),
-('Medium', 7, 7),
-('Medium', 8, 8),
-('Medium', 9, 9),
-('Medium', 10, 10),
-('Large	', 1, 1),
-('Large	', 2, 2),
-('Large	', 3, 3),
-('Large	', 4, 4),
-('Large	', 5, 5),
-('Large	', 6, 6),
-('Large	', 7, 7),
-('Large	', 8, 8),
-('Large	', 9, 9),
-('Large	', 10, 10),
-('ML', 5, 5),
-('ML', 10, 10),
-('ML', 15, 15),
-('ML', 20, 20),
-('ML', 25, 25),
-('ML', 30, 30),
-('ML', 35, 35),
-('ML', 40, 40),
-('ML', 45, 45),
-('ML', 50, 50),
-('ML', 55, 55),
-('ML', 60, 60),
-('ML', 65, 65),
-('ML', 70, 70),
-('ML', 75, 75),
-('ML', 80, 80),
-('ML', 85, 85),
-('ML', 90, 90),
-('ML', 95, 95),
-('ML', 100, 100),
-('ML', 125, 125),
-('ML', 150, 150),
-('ML', 175, 175),
-('ML', 200, 200),
-('ML', 250, 250),
-('ML', 300, 300),
-('ML', 350, 350),
-('ML', 400, 400),
-('ML', 450, 450),
-('ML', 500, 500),
-('Mug', 1, 1),
-('Mug', 2, 2),
-('Mug', 3, 3),
-('Mug', 4, 4),
-('Mug', 5, 5),
-('Piece', 1, 1),
-('Piece', 2, 2),
-('Piece', 3, 3),
-('Piece', 4, 4),
-('Piece', 5, 5),
-('Piece', 6, 6),
-('Piece', 7, 7),
-('Piece', 8, 8),
-('Piece', 9, 9),
-('Piece', 10, 10),
-('Piece', 11, 11),
-('Piece', 12, 12),
-('Piece', 13, 13),
-('Piece', 14, 14),
-('Piece', 15, 15),
-('Piece', 16, 16),
-('Piece', 17, 17),
-('Piece', 18, 18),
-('Piece', 19, 19),
-('Piece', 20, 20),
-('Piece', 21, 21),
-('Piece', 22, 22),
-('Piece', 23, 23),
-('Piece', 25, 25),
-('Piece', 24, 24),
-('Piece', 30, 30),
-('Piece', 35, 35),
-('Piece', 40, 40),
-('Piece', 45, 45),
-('Piece', 50, 50),
-('Table Spoon', 1, 1),
-('Table Spoon', 2, 2),
-('Table Spoon', 3, 3),
-('Table Spoon', 4, 4),
-('Table Spoon', 6, 6),
-('Table Spoon', 7, 7),
-('Table Spoon', 8, 8),
-('Table Spoon', 9, 9),
-('Table Spoon', 10, 10),
-('ML Glass', 50, 0.5),
-('ML Glass', 100, 1),
-('ML Glass', 150, 1.5),
-('ML Glass', 200, 2),
-('ML Glass', 250, 2.5),
-('ML Glass', 300, 3),
-('ML Glass', 350, 3.5),
-('ML Glass', 400, 4),
-('ML Glass', 450, 4.5),
-('ML Glass', 500, 5),
-('Tea Cup', 1, 1),
-('Tea Cup', 2, 2),
-('Tea Cup', 3, 3),
-('Tea Cup', 4, 4),
-('Tea Cup', 5, 5),
-('Tea Cup', 0.5, 0.5),
-('Tea Spoon', 1, 1),
-('Tea Spoon', 2, 2),
-('Tea Spoon', 3, 3),
-('Tea Spoon', 4, 4),
-('Tea Spoon', 5, 5),
-('Tea Spoon', 6, 6),
-('Tea Spoon', 7, 7),
-('Tea Spoon', 8, 8),
-('Tea Spoon', 9, 9),
-('Tea Spoon', 10, 10);
+INSERT INTO `picker_lists` (`pickerlist_id`, `uom_name`, `display_value`, `picker_value`) VALUES
+(1, 'Cup', 0.25, 0.25),
+(2, 'Cup', 0.5, 0.5),
+(3, 'Cup', 1, 1),
+(4, 'Cup', 1.5, 1.5),
+(5, 'Cup', 2, 2),
+(6, 'Cup', 2.5, 2.5),
+(7, 'Cup', 3, 3),
+(8, 'Cup', 3.5, 3.5),
+(9, 'Cup', 4, 4),
+(10, 'Cup', 4.5, 4.5),
+(11, 'Cup', 5, 5),
+(12, 'Cup', 0.75, 0.75),
+(13, 'Gram', 5, 5),
+(14, 'Gram', 10, 10),
+(15, 'Gram', 15, 15),
+(16, 'Gram', 20, 20),
+(17, 'Gram', 25, 25),
+(18, 'Gram', 50, 50),
+(19, 'Gram', 100, 100),
+(20, 'Gram', 150, 150),
+(21, 'Gram', 200, 200),
+(22, 'Gram', 250, 250),
+(23, 'Gram', 300, 300),
+(24, 'Gram', 350, 350),
+(25, 'Gram', 400, 400),
+(26, 'Gram', 450, 450),
+(27, 'Gram', 500, 500),
+(28, 'Gram', 75, 75),
+(29, 'Gram', 30, 30),
+(30, 'Gram', 40, 40),
+(31, 'Small', 1, 1),
+(32, 'Small', 2, 2),
+(33, 'Small', 3, 3),
+(34, 'Small', 4, 4),
+(35, 'Small', 5, 5),
+(36, 'Small', 6, 6),
+(37, 'Small', 7, 7),
+(38, 'Small', 8, 8),
+(39, 'Small', 9, 9),
+(40, 'Small', 10, 10),
+(41, 'Medium', 1, 1),
+(42, 'Medium', 2, 2),
+(43, 'Medium', 3, 3),
+(44, 'Medium', 4, 4),
+(45, 'Medium', 5, 5),
+(46, 'Medium', 6, 6),
+(47, 'Medium', 7, 7),
+(48, 'Medium', 8, 8),
+(49, 'Medium', 9, 9),
+(50, 'Medium', 10, 10),
+(51, 'Large	', 1, 1),
+(52, 'Large	', 2, 2),
+(53, 'Large	', 3, 3),
+(54, 'Large	', 4, 4),
+(55, 'Large	', 5, 5),
+(56, 'Large	', 6, 6),
+(57, 'Large	', 7, 7),
+(58, 'Large	', 8, 8),
+(59, 'Large	', 9, 9),
+(60, 'Large	', 10, 10),
+(61, 'ML', 5, 5),
+(62, 'ML', 10, 10),
+(63, 'ML', 15, 15),
+(64, 'ML', 20, 20),
+(65, 'ML', 25, 25),
+(66, 'ML', 30, 30),
+(67, 'ML', 35, 35),
+(68, 'ML', 40, 40),
+(69, 'ML', 45, 45),
+(70, 'ML', 50, 50),
+(71, 'ML', 55, 55),
+(72, 'ML', 60, 60),
+(73, 'ML', 65, 65),
+(74, 'ML', 70, 70),
+(75, 'ML', 75, 75),
+(76, 'ML', 80, 80),
+(77, 'ML', 85, 85),
+(78, 'ML', 90, 90),
+(79, 'ML', 95, 95),
+(80, 'ML', 100, 100),
+(81, 'ML', 125, 125),
+(82, 'ML', 150, 150),
+(83, 'ML', 175, 175),
+(84, 'ML', 200, 200),
+(85, 'ML', 250, 250),
+(86, 'ML', 300, 300),
+(87, 'ML', 350, 350),
+(88, 'ML', 400, 400),
+(89, 'ML', 450, 450),
+(90, 'ML', 500, 500),
+(91, 'Mug', 1, 1),
+(92, 'Mug', 2, 2),
+(93, 'Mug', 3, 3),
+(94, 'Mug', 4, 4),
+(95, 'Mug', 5, 5),
+(96, 'Piece', 1, 1),
+(97, 'Piece', 2, 2),
+(98, 'Piece', 3, 3),
+(99, 'Piece', 4, 4),
+(100, 'Piece', 5, 5),
+(101, 'Piece', 6, 6),
+(102, 'Piece', 7, 7),
+(103, 'Piece', 8, 8),
+(104, 'Piece', 9, 9),
+(105, 'Piece', 10, 10),
+(106, 'Piece', 11, 11),
+(107, 'Piece', 12, 12),
+(108, 'Piece', 13, 13),
+(109, 'Piece', 14, 14),
+(110, 'Piece', 15, 15),
+(111, 'Piece', 16, 16),
+(112, 'Piece', 17, 17),
+(113, 'Piece', 18, 18),
+(114, 'Piece', 19, 19),
+(115, 'Piece', 20, 20),
+(116, 'Piece', 21, 21),
+(117, 'Piece', 22, 22),
+(118, 'Piece', 23, 23),
+(119, 'Piece', 25, 25),
+(120, 'Piece', 24, 24),
+(121, 'Piece', 30, 30),
+(122, 'Piece', 35, 35),
+(123, 'Piece', 40, 40),
+(124, 'Piece', 45, 45),
+(125, 'Piece', 50, 50),
+(126, 'Table Spoon', 1, 1),
+(127, 'Table Spoon', 2, 2),
+(128, 'Table Spoon', 3, 3),
+(129, 'Table Spoon', 4, 4),
+(130, 'Table Spoon', 6, 6),
+(131, 'Table Spoon', 7, 7),
+(132, 'Table Spoon', 8, 8),
+(133, 'Table Spoon', 9, 9),
+(134, 'Table Spoon', 10, 10),
+(135, 'ML Glass', 50, 0.5),
+(136, 'ML Glass', 100, 1),
+(137, 'ML Glass', 150, 1.5),
+(138, 'ML Glass', 200, 2),
+(139, 'ML Glass', 250, 2.5),
+(140, 'ML Glass', 300, 3),
+(141, 'ML Glass', 350, 3.5),
+(142, 'ML Glass', 400, 4),
+(143, 'ML Glass', 450, 4.5),
+(144, 'ML Glass', 500, 5),
+(145, 'Tea Cup', 1, 1),
+(146, 'Tea Cup', 2, 2),
+(147, 'Tea Cup', 3, 3),
+(148, 'Tea Cup', 4, 4),
+(149, 'Tea Cup', 5, 5),
+(150, 'Tea Cup', 0.5, 0.5),
+(151, 'Tea Spoon', 1, 1),
+(152, 'Tea Spoon', 2, 2),
+(153, 'Tea Spoon', 3, 3),
+(154, 'Tea Spoon', 4, 4),
+(155, 'Tea Spoon', 5, 5),
+(156, 'Tea Spoon', 6, 6),
+(157, 'Tea Spoon', 7, 7),
+(158, 'Tea Spoon', 8, 8),
+(159, 'Tea Spoon', 9, 9),
+(160, 'Tea Spoon', 10, 10);
 
 -- --------------------------------------------------------
 
 --
 -- Table structure for table `plans`
 --
+-- Creation: Jul 01, 2019 at 08:47 AM
+--
 
+DROP TABLE IF EXISTS `plans`;
 CREATE TABLE `plans` (
+  `id` tinyint(4) NOT NULL,
   `plan_code` varchar(255) NOT NULL,
   `plan_name` varchar(255) NOT NULL,
   `description` varchar(255) NOT NULL,
@@ -1077,94 +2673,350 @@ CREATE TABLE `plans` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELATIONSHIPS FOR TABLE `plans`:
+--
+
+--
+-- Truncate table before insert `plans`
+--
+
+TRUNCATE TABLE `plans`;
+--
 -- Dumping data for table `plans`
 --
 
-INSERT INTO `plans` (`plan_code`, `plan_name`, `description`, `isCustomPlan`, `isDefault`, `isActive`) VALUES
-('PLAN1', 'Free Plan', '-', 'FALSE', 'TRUE', 'TRUE'),
-('PLAN2', 'Free Diet Tips- Parent Recipe', '-', 'FALSE', 'FALSE', 'TRUE'),
-('PLAN3', 'Customize plan', '-', 'TRUE', 'FALSE', 'TRUE');
+INSERT INTO `plans` (`id`, `plan_code`, `plan_name`, `description`, `isCustomPlan`, `isDefault`, `isActive`) VALUES
+(1, 'PLAN1', 'Free Plan', '-', 'FALSE', 'TRUE', 'TRUE'),
+(2, 'PLAN2', 'Free Diet Tips- Parent Recipe', '-', 'FALSE', 'FALSE', 'TRUE'),
+(3, 'PLAN3', 'Customize plan', '-', 'TRUE', 'FALSE', 'TRUE');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `recipes`
+-- Table structure for table `post_dinner_details`
+--
+-- Creation: Jul 02, 2019 at 08:19 AM
 --
 
-CREATE TABLE `recipes` (
-  `recipe_id` int(10) NOT NULL,
+DROP TABLE IF EXISTS `post_dinner_details`;
+CREATE TABLE `post_dinner_details` (
+  `post_dinner_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
   `recipe_name` varchar(255) NOT NULL,
-  `parent_recipe` varchar(255) NOT NULL,
-  `variants` varchar(255) NOT NULL,
-  `reference_url` varchar(255) NOT NULL,
-  `possible_measurements` varchar(255) NOT NULL,
-  `recipetype_name` varchar(255) NOT NULL,
-  `upload_image` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
-  `energy_kj_total` float DEFAULT NULL
+  `unit` varchar(255) NOT NULL,
+  `qty` float NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `recipes`
+-- RELATIONSHIPS FOR TABLE `post_dinner_details`:
+--   `code`
+--       `admin_diets` -> `code`
+--   `recipe_name`
+--       `recipes` -> `recipe_name`
 --
 
-INSERT INTO `recipes` (`recipe_id`, `recipe_name`, `parent_recipe`, `variants`, `reference_url`, `possible_measurements`, `recipetype_name`, `upload_image`, `description`, `energy_kj_total`) VALUES
-(1, 'pulav', 'rice', 'rice,flavor', 'zdsvrvzc', 'Cup', 'Lunch', 'dftyjg', '-', NULL);
+--
+-- Truncate table before insert `post_dinner_details`
+--
 
+TRUNCATE TABLE `post_dinner_details`;
 --
--- Triggers `recipes`
+-- Triggers `post_dinner_details`
 --
+DROP TRIGGER IF EXISTS `post_dinner_details_bi`;
 DELIMITER $$
-CREATE TRIGGER `recipes_bi` BEFORE INSERT ON `recipes` FOR EACH ROW SET new.energy_kj_total = (SELECT SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id)
+CREATE TRIGGER `post_dinner_details_bi` BEFORE INSERT ON `post_dinner_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `post_dinner_details_bu`;
+DELIMITER $$
+CREATE TRIGGER `post_dinner_details_bu` BEFORE UPDATE ON `post_dinner_details` FOR EACH ROW IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
+
+
+
+        
+ELSE 
+
+        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
+        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+
+
+
+END IF
 $$
 DELIMITER ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `recipetypes`
+-- Table structure for table `post_dinner_total`
+--
+-- Creation: Jul 02, 2019 at 02:36 PM
 --
 
+DROP TABLE IF EXISTS `post_dinner_total`;
+CREATE TABLE `post_dinner_total` (
+  `post_dinner_total_id` bigint(10) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date` date NOT NULL,
+  `time` time NOT NULL,
+  `energy` float DEFAULT NULL,
+  `carbs` float DEFAULT NULL,
+  `proteins` float DEFAULT NULL,
+  `fats` float DEFAULT NULL,
+  `fibres` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `post_dinner_total`:
+--   `code`
+--       `post_dinner_details` -> `code`
+--
+
+--
+-- Truncate table before insert `post_dinner_total`
+--
+
+TRUNCATE TABLE `post_dinner_total`;
+--
+-- Triggers `post_dinner_total`
+--
+DROP TRIGGER IF EXISTS `post_dinner_total_bi`;
+DELIMITER $$
+CREATE TRIGGER `post_dinner_total_bi` BEFORE INSERT ON `post_dinner_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `post_dinner_total_bu`;
+DELIMITER $$
+CREATE TRIGGER `post_dinner_total_bu` BEFORE UPDATE ON `post_dinner_total` FOR EACH ROW SET new.energy = (SELECT SUM(energy) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date))
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recipes`
+--
+-- Creation: Jul 01, 2019 at 01:33 PM
+--
+
+DROP TABLE IF EXISTS `recipes`;
+CREATE TABLE `recipes` (
+  `recipe_id` int(10) NOT NULL,
+  `recipe_name` varchar(255) NOT NULL,
+  `parent_recipe` varchar(255) NOT NULL,
+  `variants` varchar(255) DEFAULT NULL,
+  `reference_url` varchar(255) DEFAULT NULL,
+  `possible_measurements` varchar(255) NOT NULL,
+  `recipetype_name` varchar(255) DEFAULT NULL,
+  `upload_image` varchar(255) NOT NULL,
+  `description` text
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- MIME TYPES FOR TABLE `recipes`:
+--   `upload_image`
+--       `Image_JPEG`
+--
+
+--
+-- RELATIONSHIPS FOR TABLE `recipes`:
+--   `recipetype_name`
+--       `recipetypes` -> `recipetype_name`
+--
+
+--
+-- Truncate table before insert `recipes`
+--
+
+TRUNCATE TABLE `recipes`;
+--
+-- Dumping data for table `recipes`
+--
+
+INSERT INTO `recipes` (`recipe_id`, `recipe_name`, `parent_recipe`, `variants`, `reference_url`, `possible_measurements`, `recipetype_name`, `upload_image`, `description`) VALUES
+(9, 'Lemon rice(plain)', 'Rice', NULL, NULL, 'Cup,Gram', NULL, '', NULL),
+(10, 'Banana', 'Fruit', 'Keda,Kela', NULL, 'Gram,Small,Medium,Large', NULL, 'no image', NULL),
+(11, 'Lemon water without sugar and salt', 'Juice', 'Limbu pani', NULL, 'ML Glass, ML', NULL, 'no image', NULL),
+(12, 'Vegetable poha', 'Snacks', 'Poha, Veg poha, Bataka poha', NULL, 'Cup,Gram', NULL, 'no image', NULL),
+(13, 'Gajar raita', 'Raita', 'Carrot raita', NULL, 'Cup,Gram', NULL, 'no image', NULL),
+(14, 'Adrak pudina tea(with sugar)', 'Tea/Coffee', 'Ginger tea, Tea, Chai', NULL, 'ML Glass, ML,Mug,Tea Cup', NULL, 'no image', NULL),
+(15, 'Multigrain chapati', 'Chapati', 'Fulka roti, Roti, Rotli, Mix atta roti', NULL, 'Small,Medium,Large', NULL, 'no image', NULL),
+(16, 'Stuffed paneer parwal', 'Vegetable Sabji', 'Stuff paneer padval', NULL, 'Cup,Gram', NULL, 'no image', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `recipetypes`
+--
+-- Creation: Jul 01, 2019 at 08:42 AM
+--
+
+DROP TABLE IF EXISTS `recipetypes`;
 CREATE TABLE `recipetypes` (
+  `id` int(10) NOT NULL,
   `recipetype_code` varchar(255) NOT NULL,
   `recipetype_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELATIONSHIPS FOR TABLE `recipetypes`:
+--
+
+--
+-- Truncate table before insert `recipetypes`
+--
+
+TRUNCATE TABLE `recipetypes`;
+--
 -- Dumping data for table `recipetypes`
 --
 
-INSERT INTO `recipetypes` (`recipetype_code`, `recipetype_name`) VALUES
-('RTC01', 'Break Fast'),
-('RTC06', 'Dinner'),
-('RTC03', 'Early Morning'),
-('RTC05', 'Evening Snack'),
-('RTC02', 'Lunch'),
-('RTC04', 'Mid Morning'),
-('RTC12', 'Non veg food'),
-('RTC07', 'Post Dinner'),
-('RTC10', 'Post Workout'),
-('RTC08', 'Pre Dinner'),
-('RTC09', 'Pre Workout'),
-('RTC11', 'Vegan Diet');
+INSERT INTO `recipetypes` (`id`, `recipetype_code`, `recipetype_name`) VALUES
+(1, 'RTC01', 'Break Fast'),
+(2, 'RTC02', 'Lunch'),
+(3, 'RTC03', 'Early Morning'),
+(4, 'RTC04', 'Mid Morning'),
+(5, 'RTC05', 'Evening Snack'),
+(6, 'RTC06', 'Dinner'),
+(7, 'RTC07', 'Post Dinner'),
+(8, 'RTC08', 'Pre Dinner'),
+(9, 'RTC09', 'Pre Workout'),
+(10, 'RTC10', 'Post Workout'),
+(11, 'RTC11', 'Vegan Diet'),
+(12, 'RTC12', 'Non veg food');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `recipe_ingreinfo`
+-- Table structure for table `recipe_ingredetail`
+--
+-- Creation: Jul 01, 2019 at 04:41 PM
 --
 
-CREATE TABLE `recipe_ingreinfo` (
-  `reci_ingreinfo_id` bigint(10) NOT NULL,
+DROP TABLE IF EXISTS `recipe_ingredetail`;
+CREATE TABLE `recipe_ingredetail` (
+  `id` int(10) NOT NULL,
   `recipe_id` int(10) NOT NULL,
-  `default_serving` float NOT NULL,
-  `uom_name` varchar(255) NOT NULL,
-  `uom_value` float NOT NULL,
-  `unit_name` varchar(255) NOT NULL,
-  `cooking_measurements` float NOT NULL,
-  `serving_measurements` float NOT NULL,
   `food_code` varchar(255) NOT NULL,
   `ingredient_qty` float NOT NULL,
+  `food_group` varchar(255) DEFAULT NULL,
   `qty` float DEFAULT NULL,
   `exchanges_per_amount` float DEFAULT NULL,
   `energy_kj` float DEFAULT NULL,
@@ -1194,18 +3046,74 @@ CREATE TABLE `recipe_ingreinfo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `recipe_ingreinfo`
+-- RELATIONSHIPS FOR TABLE `recipe_ingredetail`:
+--   `recipe_id`
+--       `recipe_ingreinfo` -> `recipe_id`
+--   `food_code`
+--       `ingredients` -> `food_code`
 --
 
-INSERT INTO `recipe_ingreinfo` (`reci_ingreinfo_id`, `recipe_id`, `default_serving`, `uom_name`, `uom_value`, `unit_name`, `cooking_measurements`, `serving_measurements`, `food_code`, `ingredient_qty`, `qty`, `exchanges_per_amount`, `energy_kj`, `energy_kcal`, `carbohydrate`, `protein`, `total_fibre`, `solublf`, `in_solublf`, `invisible_totalfat`, `visiblefat`, `thiamine`, `riboflavin`, `niacin`, `biotin`, `folates`, `ascorbic_Acid`, `vitamin_d2d3`, `calcium`, `phosphorous`, `iron`, `sodium`, `potassium`, `zinc`, `magnesium`, `sfa`) VALUES
-(29, 1, 1, 'Cup', 250, 'GM', 200, 200, 'A015', 40, 40, 2, 596.4, 142.543, 31.296, 3.176, 1.124, 0.328, 0.796, 0.208, 0, 0.02, 0.02, 0.676, 0.24, 3.728, 0, 0, 2.996, 38.4, 0.26, 0.936, 43.2, 0.484, 7.72, 0);
+--
+-- Truncate table before insert `recipe_ingredetail`
+--
+
+TRUNCATE TABLE `recipe_ingredetail`;
+--
+-- Dumping data for table `recipe_ingredetail`
+--
+
+INSERT INTO `recipe_ingredetail` (`id`, `recipe_id`, `food_code`, `ingredient_qty`, `food_group`, `qty`, `exchanges_per_amount`, `energy_kj`, `energy_kcal`, `carbohydrate`, `protein`, `total_fibre`, `solublf`, `in_solublf`, `invisible_totalfat`, `visiblefat`, `thiamine`, `riboflavin`, `niacin`, `biotin`, `folates`, `ascorbic_Acid`, `vitamin_d2d3`, `calcium`, `phosphorous`, `iron`, `sodium`, `potassium`, `zinc`, `magnesium`, `sfa`) VALUES
+(29, 9, 'A015', 50, 'Cereal', 50, 2.5, 745.5, 178.179, 39.12, 3.97, 1.405, 0.41, 0.995, 0.26, 0, 0.025, 0.025, 0.845, 0.3, 4.66, 0, 0, 3.745, 48, 0.325, 1.17, 54, 0.605, 9.65, 0),
+(30, 9, 'E033', 7.5, 'fruits', 7.5, 0.075, 11.475, 2.7426, 0.52275, 0.03075, 0, 0, 0, 0.05625, 0, 0.003, 0.00075, 0.0075, 0.144, 0.93225, 3.612, 0.02925, 1.701, 0.7395, 0.009, 0.09075, 8.475, 0.006, 0.6675, 0),
+(31, 9, 'Z002', 5, 'Fat', 5, 1, 188.28, 45, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(32, 9, 'Z011', 100, 'Water', 100, 0.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(33, 10, 'E012', 70, 'fruits', 70, 0.7, 308, 73.6141, 16.541, 0.861, 1.358, 0.497, 0.861, 0.231, 0, 0.007, 0.021, 0.329, 1.183, 11.767, 3.332, 0.154, 3.549, 17.024, 0.196, 0.595, 214.2, 0.098, 24.486, 0),
+(34, 11, 'Z011', 100, 'Water', 100, 0.1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(35, 11, 'E033', 5, 'fruits', 5, 0.05, 7.65, 1.8284, 0.3485, 0.0205, 0, 0, 0, 0.0375, 0, 0.002, 0.0005, 0.005, 0.096, 0.6215, 2.408, 0.0195, 1.134, 0.493, 0.006, 0.0605, 5.65, 0.004, 0.445, 0),
+(36, 11, 'G016', 2, 'vegetables', 2, 0.02, 3.1, 0.74092, 0.0478, 0.0932, 0.1178, 0.028, 0.0898, 0.013, 0, 0.0004, 0.00038, 0.0148, 0.0442, 2.12, 0.3432, 0.0674, 4.1, 1.305, 0.1712, 0.3374, 10.78, 0.015, 2.2, 0),
+(37, 11, 'G009', 2, 'vegetables', 2, 0.02, 2.6, 0.62142, 0.0386, 0.0704, 0.0932, 0.0284, 0.0648, 0.014, 0, 0.0018, 0.001, 0.0146, 0.0834, 1.0202, 0.4774, 0.071, 2.92, 1.2938, 0.106, 0.74, 10.92, 0.0136, 1.4536, 0),
+(38, 12, 'A011', 50, 'Cereal', 50, 2.5, 740, 176.864, 38.375, 3.72, 1.73, 0.405, 1.325, 0.57, 0, 0.06, 0.02, 0.8, 0.195, 4.23, 0, 0, 4.595, 97.5, 2.23, 1.29, 74, 0.745, 38.96, 0),
+(39, 12, 'D076', 30, 'vegetables', 30, 0.3, 24.6, 5.8794, 0.813, 0.27, 0.531, 0.099, 0.432, 0.141, 0, 0.009, 0.009, 0.156, 0.354, 5.838, 8.241, 3.672, 3.051, 5.631, 0.09, 2.919, 61.2, 0.036, 4.095, 0),
+(40, 12, 'F006', 10, 'vegetables', 10, 0.1, 29.2, 6.979, 1.489, 0.154, 0.171, 0.058, 0.113, 0.023, 0, 0.006, 0.001, 0.104, 0.135, 1.551, 2.315, 0.019, 0.952, 4.342, 0.057, 0.411, 54.1, 0.028, 2.407, 0),
+(41, 12, 'G003', 5, 'vegetables', 5, 0.05, 8.45, 2.0195, 0.2615, 0.119, 0.255, 0.075, 0.1805, 0.0375, 0, 0.0045, 0.0055, 0.0435, 0.032, 1.0225, 4.6815, 0.1585, 0.902, 2.512, 0.0625, 0.128, 15.85, 0.0135, 1.495, 0),
+(42, 12, 'G009', 3, 'vegetables', 3, 0.03, 3.9, 0.93213, 0.0579, 0.1056, 0.1398, 0.0426, 0.0972, 0.021, 0, 0.0027, 0.0015, 0.0219, 0.1251, 1.5303, 0.7161, 0.1065, 4.38, 1.9407, 0.159, 1.11, 16.38, 0.0204, 2.1804, 0),
+(43, 12, 'E033', 3, 'fruits', 3, 0.03, 4.59, 1.09704, 0.2091, 0.0123, 0, 0, 0, 0.0225, 0, 0.0012, 0.0003, 0.003, 0.0576, 0.3729, 1.4448, 0.0117, 0.6804, 0.2958, 0.0036, 0.0363, 3.39, 0.0024, 0.267, 0),
+(44, 12, 'I001', 3, 'sugar', 3, 0.6, 44.4, 10.6118, 2.5461, 0.0555, 0, 0, 0, 0.0048, 0, 0.0012, 0.0003, 0.0006, 0.0174, 0.432, 0, 0.0141, 3.21, 2.2359, 0.1389, 0.7614, 14.64, 0.0135, 3.45, 0),
+(45, 12, 'Z001', 3, 'Fat', 3, 0.6, 112.968, 27, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(46, 13, 'F002', 70, 'vegetables', 70, 0.7, 97.3, 23.2554, 3.885, 0.665, 2.926, 0.959, 1.967, 0.329, 0, 0.028, 0.021, 0.154, 1.05, 16.828, 4.354, 0.952, 24.563, 30.142, 0.42, 36.631, 191.1, 0.175, 11.711, 0),
+(48, 13, 'G009', 5, 'vegetables', 5, 0.05, 6.5, 1.55355, 0.0965, 0.176, 0.233, 0.071, 0.162, 0.035, 0, 0.0045, 0.0025, 0.0365, 0.2085, 2.5505, 1.1935, 0.1775, 7.3, 3.2345, 0.265, 1.85, 27.3, 0.034, 3.634, 0),
+(49, 13, 'G003', 5, 'vegetables', 5, 0.05, 8.45, 2.0195, 0.2615, 0.119, 0.255, 0.075, 0.1805, 0.0375, 0, 0.0045, 0.0055, 0.0435, 0.032, 1.0225, 4.6815, 0.1585, 0.902, 2.512, 0.0625, 0.128, 15.85, 0.0135, 1.495, 0),
+(50, 13, 'z018', 100, 'milk and milk product', 100, 0.4, 251.36, 60.07, 2.98, 3.1, 0, 0, 0, 3.99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(51, 13, 'Z001', 5, 'Fat', 5, 1, 188.28, 45, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(52, 14, 'L001', 150, 'milk and milk product', 150, 0.6, 673.5, 160.971, 12.585, 5.52, 0, 0, 0, 9.87, 0, 0.075, 0.195, 0.105, 3.24, 12.855, 3.555, 2.445, 181.5, 130.41, 0.24, 45.15, 163.5, 0.45, 15.075, 0),
+(53, 14, 'G014', 5, 'vegetables', 5, 0.05, 11.5, 2.74855, 0.4485, 0.111, 0.268, 0.054, 0.214, 0.0425, 0, 0.002, 0.002, 0.021, 0.0535, 0.541, 0.2715, 0.2045, 0.944, 2.218, 0.095, 0.5015, 20.35, 0.0195, 2.733, 0),
+(55, 14, 'G016', 2, 'vegetables', 2, 0.02, 3.1, 0.74092, 0.0478, 0.0932, 0.1178, 0.028, 0.0898, 0.013, 0, 0.0004, 0.00038, 0.0148, 0.0442, 2.12, 0.3432, 0.0674, 4.1, 1.305, 0.1712, 0.3374, 10.78, 0.015, 2.2, 0),
+(56, 14, 'z021', 10, 'sugar', 10, 2, 209.2, 50, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(57, 14, 'Z011', 150, 'Water', 150, 0.15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(58, 15, 'A019', 3, 'Cereal', 3, 0.15, 40.2, 9.60804, 1.9251, 0.3171, 0.3408, 0.0489, 0.2919, 0.0459, 0, 0.0126, 0.0045, 0.0711, 0.0228, 0.8766, 0, 0.4029, 0.9282, 9.45, 0.123, 0.0612, 9.33, 0.0855, 3.75, 0),
+(59, 15, 'Z003', 3, 'Cereal', 3, 0.15, 43.68, 10.4397, 1.8534, 0.3288, 0.3447, 0.0702, 0.2742, 0.1629, 0, 0.0075, 0.006, 0.0258, 0.0192, 1.0833, 0, 0.1695, 0.8205, 8.67, 0.1926, 0.1233, 10.95, 0.0828, 3.72, 0),
+(60, 15, 'Z006', 3, 'Cereal', 3, 0.15, 43.3044, 10.35, 2.2356, 0.315, 0.303, 0, 0, 0.048, 0, 0.0111, 0.0033, 0.1878, 0, 0.24, 0, 0, 0.96, 8.88, 0.0804, 0.12, 9.27, 0.06, 2.88, 0.0099),
+(61, 15, 'Z008', 3, 'Cereal', 3, 0.15, 45.3126, 10.83, 2.3055, 0.2079, 0.219, 0, 0, 0.1158, 0, 0.0072, 0.0024, 0.057, 0, 0.75, 0, 0, 0.21, 8.16, 0.0714, 0.15, 9.45, 0.0519, 2.79, 0.0162),
+(62, 15, 'Z004', 3, 'Cereal', 3, 0.15, 45.9402, 10.98, 2.4039, 0.1785, 0.072, 0, 0, 0.0426, 0, 0.0039, 0.0006, 0.0777, 0, 0.12, 0, 0, 0.3, 2.94, 0.0105, 0, 2.28, 0.024, 1.05, 0.0114),
+(63, 15, 'Z005', 3, 'Cereal', 3, 0.15, 45.0615, 10.77, 2.2992, 0.2649, 0.198, 0, 0, 0.1002, 0, 0.0096, 0.0018, 0.1347, 0, 0.75, 0.024, 0, 0.36, 8.34, 0.0942, 0.09, 9.72, 0.0489, 3.69, 0.0156),
+(64, 15, 'Z009', 3, 'Cereal', 3, 0.15, 42.1746, 10.08, 2.178, 0.231, 0.108, 0, 0, 0.039, 0, 0.0126, 0.0057, 0.033, 0, 0, 0, 0, 10.5, 0, 0.117, 0, 0, 0, 0, 0),
+(65, 16, 'D076', 150, 'vegetables', 150, 1.5, 123, 29.397, 4.065, 1.35, 2.655, 0.495, 2.16, 0.705, 0, 0.045, 0.045, 0.78, 1.77, 29.19, 41.205, 18.36, 15.255, 28.155, 0.45, 14.595, 306, 0.18, 20.475, 0),
+(66, 16, 'D060', 80, 'vegetables', 80, 0.8, 80.8, 19.312, 2.832, 1.12, 2.088, 0.632, 1.456, 0.24, 0, 0.04, 0.04, 0.536, 1.488, 15.968, 15.392, 0.552, 24.608, 27.048, 0.4, 1.832, 93.6, 0.184, 19.672, 0),
+(67, 16, 'G003', 10, 'vegetables', 10, 0.1, 16.9, 4.039, 0.523, 0.238, 0.51, 0.15, 0.361, 0.075, 0, 0.009, 0.011, 0.087, 0.064, 2.045, 9.363, 0.317, 1.804, 5.024, 0.125, 0.256, 31.7, 0.027, 2.99, 0),
+(68, 16, 'G009', 10, 'vegetables', 10, 0.1, 13, 3.1071, 0.193, 0.352, 0.466, 0.142, 0.324, 0.07, 0, 0.009, 0.005, 0.073, 0.417, 5.101, 2.387, 0.355, 14.6, 6.469, 0.53, 3.7, 54.6, 0.068, 7.268, 0),
+(69, 16, 'L003', 50, 'milk and milk product', 50, 1.13636, 539.5, 128.94, 6.205, 9.43, 0, 0, 0, 7.39, 0, 0.01, 0.05, 0.065, 10.52, 46.655, 0, 0.065, 238, 165, 0.45, 9.02, 31.765, 1.37, 13.31, 0),
+(70, 16, 'z020', 10, 'milk and milk product', 10, 0.2, 122.032, 29.166, 0.782, 1.332, 0, 0, 0, 2.3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 --
--- Triggers `recipe_ingreinfo`
+-- Triggers `recipe_ingredetail`
 --
+DROP TRIGGER IF EXISTS `recipe_ingredetail_bi`;
 DELIMITER $$
-CREATE TRIGGER `recipe_ingreinfo_bi` BEFORE INSERT ON `recipe_ingreinfo` FOR EACH ROW SET new.qty = (new.serving_measurements * new.ingredient_qty / new.cooking_measurements),
+CREATE TRIGGER `recipe_ingredetail_bi` BEFORE INSERT ON `recipe_ingredetail` FOR EACH ROW SET new.qty = ( ( SELECT serving_measurements FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id) * ( new.ingredient_qty ) / ( SELECT cooking_measurements FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id) ) ,
 
+
+
+new.food_group = (SELECT food_group FROM  ingredients WHERE food_code  = new.food_code),
 new.exchanges_per_amount =  ( (new.qty) / (SELECT one_exchange FROM ingredients WHERE food_code  = new.food_code) ), 
 
 new.energy_kj =   (SELECT energy_kj FROM ingredients WHERE food_code  = new.food_code) * (new.qty / (SELECT quantity FROM ingredients WHERE food_code  = new.food_code)),
@@ -1239,28 +3147,68 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tasks`
+-- Table structure for table `recipe_ingreinfo`
+--
+-- Creation: Jul 01, 2019 at 07:48 AM
 --
 
-CREATE TABLE `tasks` (
-  `id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `is_active` tinyint(1) NOT NULL,
-  `secret` varchar(50) NOT NULL
+DROP TABLE IF EXISTS `recipe_ingreinfo`;
+CREATE TABLE `recipe_ingreinfo` (
+  `reci_ingreinfo_id` bigint(10) NOT NULL,
+  `recipe_id` int(10) NOT NULL,
+  `default_serving` float NOT NULL,
+  `uom_name` varchar(255) NOT NULL,
+  `uom_value` float DEFAULT NULL,
+  `unit_name` varchar(255) NOT NULL,
+  `cooking_measurements` float NOT NULL,
+  `serving_measurements` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `recipe_ingreinfo`:
+--   `recipe_id`
+--       `recipes` -> `recipe_id`
+--   `uom_name`
+--       `uoms` -> `uom_name`
+--
+
+--
+-- Truncate table before insert `recipe_ingreinfo`
+--
+
+TRUNCATE TABLE `recipe_ingreinfo`;
+--
+-- Dumping data for table `recipe_ingreinfo`
+--
+
+INSERT INTO `recipe_ingreinfo` (`reci_ingreinfo_id`, `recipe_id`, `default_serving`, `uom_name`, `uom_value`, `unit_name`, `cooking_measurements`, `serving_measurements`) VALUES
+(66, 9, 1, 'Cup', 250, 'GM', 150, 150),
+(67, 10, 1, 'Medium', 5, 'INCH', 70, 70),
+(68, 11, 1, 'ML Glass', 100, 'ML', 100, 100),
+(69, 12, 1, 'Cup', 250, 'GM', 150, 150),
+(70, 13, 1, 'Cup', 250, 'GM', 200, 200),
+(71, 14, 1, 'Tea Cup', 200, 'ML', 200, 200),
+(72, 15, 1, 'Medium', 7, 'INCH', 1, 1),
+(73, 16, 1, 'Cup', 250, 'GM', 200, 200);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `total_recipe`
+-- Table structure for table `recipe_uom`
+--
+-- Creation: Jul 01, 2019 at 05:01 PM
 --
 
-CREATE TABLE `total_recipe` (
-  `recipe_id` int(11) NOT NULL,
-  `ingredient_qty` float DEFAULT NULL,
+DROP TABLE IF EXISTS `recipe_uom`;
+CREATE TABLE `recipe_uom` (
+  `recuom_id` int(10) NOT NULL,
+  `recipe_id` int(10) NOT NULL,
+  `rec_name` varchar(255) DEFAULT NULL,
+  `rec_uom_name` varchar(255) NOT NULL,
+  `rec_uom_value` float NOT NULL,
+  `serving_measurements` float DEFAULT NULL,
   `energy_kj` float DEFAULT NULL,
   `energy_kcal` float DEFAULT NULL,
-  `gi_value` float DEFAULT NULL,
   `carbohydrate` float DEFAULT NULL,
   `protein` float DEFAULT NULL,
   `total_fibre` float DEFAULT NULL,
@@ -1282,21 +3230,431 @@ CREATE TABLE `total_recipe` (
   `potassium` float DEFAULT NULL,
   `zinc` float DEFAULT NULL,
   `magnesium` float DEFAULT NULL,
-  `sfa` float DEFAULT NULL
+  `sfa` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELATIONSHIPS FOR TABLE `recipe_uom`:
+--   `recipe_id`
+--       `total_recipe` -> `recipe_id`
+--
+
+--
+-- Truncate table before insert `recipe_uom`
+--
+
+TRUNCATE TABLE `recipe_uom`;
+--
+-- Dumping data for table `recipe_uom`
+--
+
+INSERT INTO `recipe_uom` (`recuom_id`, `recipe_id`, `rec_name`, `rec_uom_name`, `rec_uom_value`, `serving_measurements`, `energy_kj`, `energy_kcal`, `carbohydrate`, `protein`, `total_fibre`, `solublf`, `in_solublf`, `invisible_totalfat`, `visiblefat`, `thiamine`, `riboflavin`, `niacin`, `biotin`, `folates`, `ascorbic_Acid`, `vitamin_d2d3`, `calcium`, `phosphorous`, `iron`, `sodium`, `potassium`, `zinc`, `magnesium`, `sfa`, `Cereal`, `Fat`, `fruits`, `milk`, `Nuts`, `pulses`, `sugar`, `vegetables`, `Water`) VALUES
+(28, 9, 'Lemon rice(plain)', 'Cup', 250, 150, 945.255, 225.922, 39.6427, 4.00075, 1.405, 0.41, 0.995, 0.31625, 5, 0.028, 0.02575, 0.8525, 0.444, 5.59225, 3.612, 0.02925, 5.446, 48.7395, 0.334, 1.26075, 62.475, 0.611, 10.3175, 0, 2.5, 1, 0.075, NULL, NULL, NULL, NULL, NULL, 0.1),
+(29, 9, 'Lemon rice(plain)', 'Gram', 1, 1, 6.3017, 1.50614, 0.264285, 0.0266717, 0.00936667, 0.00273333, 0.00663333, 0.00210833, 0.0333333, 0.000186667, 0.000171667, 0.00568333, 0.00296, 0.0372817, 0.02408, 0.000195, 0.0363067, 0.32493, 0.00222667, 0.008405, 0.4165, 0.00407333, 0.0687833, 0, 0.0166667, 0.00666667, 0.0005, NULL, NULL, NULL, NULL, NULL, 0.000666667),
+(30, 10, 'Banana', 'Gram', 1, 1, 4.4, 1.05163, 0.2363, 0.0123, 0.0194, 0.0071, 0.0123, 0.0033, 0, 0.0001, 0.0003, 0.0047, 0.0169, 0.1681, 0.0476, 0.0022, 0.0507, 0.2432, 0.0028, 0.0085, 3.06, 0.0014, 0.3498, 0, NULL, NULL, 0.01, NULL, NULL, NULL, NULL, NULL, NULL),
+(31, 10, 'Banana', 'Small', 3.5, 49, 215.6, 51.5299, 11.5787, 0.6027, 0.9506, 0.3479, 0.6027, 0.1617, 0, 0.0049, 0.0147, 0.2303, 0.8281, 8.2369, 2.3324, 0.1078, 2.4843, 11.9168, 0.1372, 0.4165, 149.94, 0.0686, 17.1402, 0, NULL, NULL, 0.49, NULL, NULL, NULL, NULL, NULL, NULL),
+(32, 10, 'Banana', 'Medium', 5, 70, 308, 73.6141, 16.541, 0.861, 1.358, 0.497, 0.861, 0.231, 0, 0.007, 0.021, 0.329, 1.183, 11.767, 3.332, 0.154, 3.549, 17.024, 0.196, 0.595, 214.2, 0.098, 24.486, 0, NULL, NULL, 0.7, NULL, NULL, NULL, NULL, NULL, NULL),
+(33, 10, 'Banana', 'Large', 7, 98, 431.2, 103.06, 23.1574, 1.2054, 1.9012, 0.6958, 1.2054, 0.3234, 0, 0.0098, 0.0294, 0.4606, 1.6562, 16.4738, 4.6648, 0.2156, 4.9686, 23.8336, 0.2744, 0.833, 299.88, 0.1372, 34.2804, 0, NULL, NULL, 0.98, NULL, NULL, NULL, NULL, NULL, NULL),
+(34, 11, 'Lemon water without sugar and salt', 'ML Glass', 100, 100, 13.35, 3.19074, 0.4349, 0.1841, 0.211, 0.0564, 0.1546, 0.0645, 0, 0.0042, 0.00188, 0.0344, 0.2236, 3.7617, 3.2286, 0.1579, 8.154, 3.0918, 0.2832, 1.1379, 27.35, 0.0326, 4.0986, 0, NULL, NULL, 0.05, NULL, NULL, NULL, NULL, 0.04, 0.1),
+(35, 11, 'Lemon water without sugar and salt', 'ML', 1, 1, 0.1335, 0.0319074, 0.004349, 0.001841, 0.00211, 0.000564, 0.001546, 0.000645, 0, 0.000042, 0.0000188, 0.000344, 0.002236, 0.037617, 0.032286, 0.001579, 0.08154, 0.030918, 0.002832, 0.011379, 0.2735, 0.000326, 0.040986, 0, NULL, NULL, 0.0005, NULL, NULL, NULL, NULL, 0.0004, 0.001),
+(36, 12, 'Vegetable poha', 'Cup', 250, 150, 968.108, 231.383, 43.7516, 4.4364, 2.8268, 0.6796, 2.1477, 0.8198, 3, 0.0846, 0.0376, 1.129, 0.9161, 14.9767, 17.3984, 3.9818, 17.7704, 114.457, 2.741, 6.6557, 239.56, 0.8588, 52.8544, 0, 2.5, 0.6, 0.03, NULL, NULL, NULL, 0.6, 0.48, NULL),
+(37, 12, 'Vegetable poha', 'Gram', 1, 1, 6.45405, 1.54255, 0.291677, 0.029576, 0.0188453, 0.00453067, 0.014318, 0.00546533, 0.02, 0.000564, 0.000250667, 0.00752667, 0.00610733, 0.0998447, 0.115989, 0.0265453, 0.118469, 0.763049, 0.0182733, 0.0443713, 1.59707, 0.00572533, 0.352363, 0, 0.0166667, 0.004, 0.0002, NULL, NULL, NULL, 0.004, 0.0032, NULL),
+(38, 13, 'Gajar raita', 'Cup', 250, 200, 551.89, 131.898, 7.223, 4.06, 3.414, 1.105, 2.3095, 4.3915, 5, 0.037, 0.029, 0.234, 1.2905, 20.401, 10.229, 1.288, 32.765, 35.8885, 0.7475, 38.609, 234.25, 0.2225, 16.84, 0, NULL, 1, NULL, 0.4, NULL, NULL, NULL, 0.8, NULL),
+(39, 13, 'Gajar raita', 'Gram', 1, 1, 2.75945, 0.659492, 0.036115, 0.0203, 0.01707, 0.005525, 0.0115475, 0.0219575, 0.025, 0.000185, 0.000145, 0.00117, 0.0064525, 0.102005, 0.051145, 0.00644, 0.163825, 0.179442, 0.0037375, 0.193045, 1.17125, 0.0011125, 0.0842, 0, NULL, 0.005, NULL, 0.002, NULL, NULL, NULL, 0.004, NULL),
+(40, 14, 'Adrak pudina tea(with sugar)', 'Tea Cup', 200, 200, 897.3, 214.46, 23.0813, 5.7242, 0.3858, 0.082, 0.3038, 9.9255, 0, 0.0774, 0.19738, 0.1408, 3.3377, 15.516, 4.1697, 2.7169, 186.544, 133.933, 0.5062, 45.9889, 194.63, 0.4845, 20.008, 0, NULL, NULL, NULL, 0.6, NULL, NULL, 2, 0.07, 0.15),
+(41, 14, 'Adrak pudina tea(with sugar)', 'ML Glass', 100, 100, 448.65, 107.23, 11.5407, 2.8621, 0.1929, 0.041, 0.1519, 4.96275, 0, 0.0387, 0.09869, 0.0704, 1.66885, 7.758, 2.08485, 1.35845, 93.272, 66.9665, 0.2531, 22.9945, 97.315, 0.24225, 10.004, 0, NULL, NULL, NULL, 0.3, NULL, NULL, 1, 0.035, 0.075),
+(42, 14, 'Adrak pudina tea(with sugar)', 'Mug', 350, 350, 1570.28, 375.306, 40.3923, 10.0173, 0.67515, 0.1435, 0.53165, 17.3696, 0, 0.13545, 0.345415, 0.2464, 5.84098, 27.153, 7.29697, 4.75457, 326.452, 234.383, 0.88585, 80.4806, 340.603, 0.847875, 35.014, 0, NULL, NULL, NULL, 1.05, NULL, NULL, 3.5, 0.1225, 0.2625),
+(43, 14, 'Adrak pudina tea(with sugar)', 'ML', 1, 1, 4.4865, 1.0723, 0.115407, 0.028621, 0.001929, 0.00041, 0.001519, 0.0496275, 0, 0.000387, 0.0009869, 0.000704, 0.0166885, 0.07758, 0.0208485, 0.0135845, 0.93272, 0.669665, 0.002531, 0.229945, 0.97315, 0.0024225, 0.10004, 0, NULL, NULL, NULL, 0.003, NULL, NULL, 0.01, 0.00035, 0.00075),
+(44, 15, 'Multigrain chapati', 'Medium', 7, 1, 305.673, 73.0577, 15.2007, 1.8432, 1.5855, 0.1191, 0.5661, 0.5544, 0, 0.0645, 0.0243, 0.5871, 0.042, 3.8199, 0.024, 0.5724, 14.0787, 46.44, 0.6891, 0.5445, 51, 0.3531, 17.88, 0.0531, 1.05, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(45, 15, 'Multigrain chapati', 'Small', 5.76, 0.822857, 251.525, 60.1161, 12.508, 1.51669, 1.30464, 0.0980023, 0.465819, 0.456192, 0, 0.0530743, 0.0199954, 0.483099, 0.03456, 3.14323, 0.0197486, 0.471004, 11.5848, 38.2135, 0.567031, 0.448046, 41.9657, 0.290551, 14.7127, 0.0436937, 0.864, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(46, 15, 'Multigrain chapati', 'Large', 11.6, 1.65714, 506.544, 121.067, 25.1897, 3.05445, 2.6274, 0.197366, 0.938109, 0.91872, 0, 0.106886, 0.0402686, 0.972909, 0.0696, 6.33012, 0.0397714, 0.948549, 23.3304, 76.9577, 1.14194, 0.902314, 84.5143, 0.585137, 29.6297, 0.0879943, 1.74, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(47, 16, 'Stuffed paneer parwal', 'Cup', 250, 200, 895.232, 213.961, 14.6, 13.822, 5.719, 1.419, 4.301, 10.78, 0, 0.113, 0.151, 1.541, 14.259, 98.959, 68.347, 19.649, 294.267, 231.696, 1.955, 29.403, 517.665, 1.829, 63.715, 0, NULL, NULL, NULL, 1.33636, NULL, NULL, NULL, 2.5, NULL),
+(48, 16, 'Stuffed paneer parwal', 'Gram', 1, 1, 4.47616, 1.06981, 0.073, 0.06911, 0.028595, 0.007095, 0.021505, 0.0539, 0, 0.000565, 0.000755, 0.007705, 0.071295, 0.494795, 0.341735, 0.098245, 1.47133, 1.15848, 0.009775, 0.147015, 2.58832, 0.009145, 0.318575, 0, NULL, NULL, NULL, 0.00668182, NULL, NULL, NULL, 0.0125, NULL);
+
+--
+-- Triggers `recipe_uom`
+--
+DROP TRIGGER IF EXISTS `recipe_uom_bi`;
+DELIMITER $$
+CREATE TRIGGER `recipe_uom_bi` BEFORE INSERT ON `recipe_uom` FOR EACH ROW IF ((new.rec_uom_name = 'Gram' OR new.rec_uom_name = 'ML') AND new.rec_uom_value = 1) THEN
+
+        SET new.serving_measurements = 1 ,
+        new.rec_name = (SELECT recipe_name FROM recipes WHERE recipe_id = new.recipe_id),
+        new.energy_kj = (SELECT energy_kj FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.energy_kcal = (SELECT energy_kcal FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.carbohydrate = (SELECT carbohydrate FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.protein = (SELECT protein FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.total_fibre = (SELECT total_fibre FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.solublf = (SELECT solublf FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.in_solublf = (SELECT in_solublf FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.invisible_totalfat = (SELECT invisible_totalfat FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.visiblefat = (SELECT visiblefat FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.thiamine = (SELECT thiamine FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.riboflavin = (SELECT riboflavin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.niacin = (SELECT niacin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.biotin = (SELECT biotin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.folates = (SELECT folates FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.ascorbic_Acid = (SELECT ascorbic_Acid FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.vitamin_d2d3 = (SELECT vitamin_d2d3 FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.calcium = (SELECT calcium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.phosphorous = (SELECT phosphorous FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.iron = (SELECT iron FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.sodium = (SELECT sodium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.potassium = (SELECT potassium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.zinc = (SELECT zinc FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.magnesium = (SELECT magnesium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.sfa = (SELECT sfa FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+
+        new.Cereal = (SELECT Cereal FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Fat = (SELECT Fat FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.fruits = (SELECT fruits FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.milk = (SELECT milk FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Nuts = (SELECT Nuts FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.pulses = (SELECT pulses FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.sugar = (SELECT sugar FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.vegetables = (SELECT vegetables FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Water = (SELECT Water FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id);
+
+
+
+ELSE        
+        SET new.serving_measurements = (new.rec_uom_value) * (SELECT serving_measurements FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id) / (SELECT uom_value FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id ),
+
+         new.rec_name = (SELECT recipe_name FROM recipes WHERE recipe_id = new.recipe_id),
+        new.energy_kj = (SELECT energy_kj FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.energy_kcal = (SELECT energy_kcal FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.carbohydrate = (SELECT carbohydrate FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.protein = (SELECT protein FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.total_fibre = (SELECT total_fibre FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.solublf = (SELECT solublf FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.in_solublf = (SELECT in_solublf FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.invisible_totalfat = (SELECT invisible_totalfat FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.visiblefat = (SELECT visiblefat FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.thiamine = (SELECT thiamine FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.riboflavin = (SELECT riboflavin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.niacin = (SELECT niacin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.biotin = (SELECT biotin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.folates = (SELECT folates FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.ascorbic_Acid = (SELECT ascorbic_Acid FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.vitamin_d2d3 = (SELECT vitamin_d2d3 FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.calcium = (SELECT calcium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.phosphorous = (SELECT phosphorous FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.iron = (SELECT iron FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.sodium = (SELECT sodium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.potassium = (SELECT potassium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.zinc = (SELECT zinc FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.magnesium = (SELECT magnesium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.sfa = (SELECT sfa FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+
+        new.Cereal = (SELECT Cereal FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Fat = (SELECT Fat FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.fruits = (SELECT fruits FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.milk = (SELECT milk FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Nuts = (SELECT Nuts FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.pulses = (SELECT pulses FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.sugar = (SELECT sugar FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.vegetables = (SELECT vegetables FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Water = (SELECT Water FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id);
+
+END IF
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `recipe_uom_bu`;
+DELIMITER $$
+CREATE TRIGGER `recipe_uom_bu` BEFORE UPDATE ON `recipe_uom` FOR EACH ROW IF ((new.rec_uom_name = 'Gram' OR new.rec_uom_name = 'ML') AND new.rec_uom_value = 1) THEN
+
+        SET new.serving_measurements = 1 ,
+        new.rec_name = (SELECT recipe_name FROM recipes WHERE recipe_id = new.recipe_id),
+        new.energy_kj = (SELECT energy_kj FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.energy_kcal = (SELECT energy_kcal FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.carbohydrate = (SELECT carbohydrate FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.protein = (SELECT protein FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.total_fibre = (SELECT total_fibre FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.solublf = (SELECT solublf FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.in_solublf = (SELECT in_solublf FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.invisible_totalfat = (SELECT invisible_totalfat FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.visiblefat = (SELECT visiblefat FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.thiamine = (SELECT thiamine FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.riboflavin = (SELECT riboflavin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.niacin = (SELECT niacin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.biotin = (SELECT biotin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.folates = (SELECT folates FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.ascorbic_Acid = (SELECT ascorbic_Acid FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.vitamin_d2d3 = (SELECT vitamin_d2d3 FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.calcium = (SELECT calcium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.phosphorous = (SELECT phosphorous FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.iron = (SELECT iron FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.sodium = (SELECT sodium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.potassium = (SELECT potassium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.zinc = (SELECT zinc FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.magnesium = (SELECT magnesium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.sfa = (SELECT sfa FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+
+        new.Cereal = (SELECT Cereal FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Fat = (SELECT Fat FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.fruits = (SELECT fruits FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.milk = (SELECT milk FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Nuts = (SELECT Nuts FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.pulses = (SELECT pulses FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.sugar = (SELECT sugar FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.vegetables = (SELECT vegetables FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Water = (SELECT Water FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id);
+
+
+
+ELSE        
+        SET new.serving_measurements = (new.rec_uom_value) * (SELECT serving_measurements FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id) / (SELECT uom_value FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id ),
+
+         new.rec_name = (SELECT recipe_name FROM recipes WHERE recipe_id = new.recipe_id),
+        new.energy_kj = (SELECT energy_kj FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.energy_kcal = (SELECT energy_kcal FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.carbohydrate = (SELECT carbohydrate FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.protein = (SELECT protein FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.total_fibre = (SELECT total_fibre FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.solublf = (SELECT solublf FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.in_solublf = (SELECT in_solublf FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.invisible_totalfat = (SELECT invisible_totalfat FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.visiblefat = (SELECT visiblefat FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.thiamine = (SELECT thiamine FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.riboflavin = (SELECT riboflavin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.niacin = (SELECT niacin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.biotin = (SELECT biotin FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.folates = (SELECT folates FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.ascorbic_Acid = (SELECT ascorbic_Acid FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.vitamin_d2d3 = (SELECT vitamin_d2d3 FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.calcium = (SELECT calcium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.phosphorous = (SELECT phosphorous FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.iron = (SELECT iron FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.sodium = (SELECT sodium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.potassium = (SELECT potassium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.zinc = (SELECT zinc FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.magnesium = (SELECT magnesium FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+        new.sfa = (SELECT sfa FROM total_recipe WHERE recipe_id = new.recipe_id) * (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+
+        new.Cereal = (SELECT Cereal FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Fat = (SELECT Fat FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.fruits = (SELECT fruits FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.milk = (SELECT milk FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Nuts = (SELECT Nuts FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.pulses = (SELECT pulses FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.sugar = (SELECT sugar FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.vegetables = (SELECT vegetables FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id),
+
+        new.Water = (SELECT Water FROM total_recipe WHERE recipe_id = new.recipe_id) *  (new.serving_measurements) / (SELECT serving_measurements FROM total_recipe WHERE recipe_id = new.recipe_id);
+
+END IF
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tasks`
+--
+-- Creation: Jun 20, 2019 at 02:14 PM
+--
+
+DROP TABLE IF EXISTS `tasks`;
+CREATE TABLE `tasks` (
+  `id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `secret` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `tasks`:
+--
+
+--
+-- Truncate table before insert `tasks`
+--
+
+TRUNCATE TABLE `tasks`;
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `total_recipe`
+--
+-- Creation: Jul 01, 2019 at 10:03 AM
+--
+
+DROP TABLE IF EXISTS `total_recipe`;
+CREATE TABLE `total_recipe` (
+  `totalrecipe_id` int(11) NOT NULL,
+  `recipe_id` int(11) NOT NULL,
+  `uom_name` varchar(255) DEFAULT NULL,
+  `uom_value` float DEFAULT NULL,
+  `serving_measurements` float DEFAULT NULL,
+  `ingredient_qty` float DEFAULT NULL,
+  `qty` float DEFAULT NULL,
+  `exchanges_per_amount` float DEFAULT NULL,
+  `energy_kj` float DEFAULT NULL,
+  `energy_kcal` float DEFAULT NULL,
+  `carbohydrate` float DEFAULT NULL,
+  `protein` float DEFAULT NULL,
+  `total_fibre` float DEFAULT NULL,
+  `solublf` float DEFAULT NULL,
+  `in_solublf` float DEFAULT NULL,
+  `invisible_totalfat` float DEFAULT NULL,
+  `visiblefat` float DEFAULT NULL,
+  `thiamine` float DEFAULT NULL,
+  `riboflavin` float DEFAULT NULL,
+  `niacin` float DEFAULT NULL,
+  `biotin` float DEFAULT NULL,
+  `folates` float DEFAULT NULL,
+  `ascorbic_Acid` float DEFAULT NULL,
+  `vitamin_d2d3` float DEFAULT NULL,
+  `calcium` float DEFAULT NULL,
+  `phosphorous` float DEFAULT NULL,
+  `iron` float DEFAULT NULL,
+  `sodium` float DEFAULT NULL,
+  `potassium` float DEFAULT NULL,
+  `zinc` float DEFAULT NULL,
+  `magnesium` float DEFAULT NULL,
+  `sfa` float DEFAULT NULL,
+  `Cereal` float DEFAULT NULL,
+  `Fat` float DEFAULT NULL,
+  `fruits` float DEFAULT NULL,
+  `milk` float DEFAULT NULL,
+  `Nuts` float DEFAULT NULL,
+  `pulses` float DEFAULT NULL,
+  `sugar` float DEFAULT NULL,
+  `vegetables` float DEFAULT NULL,
+  `Water` float DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELATIONSHIPS FOR TABLE `total_recipe`:
+--   `recipe_id`
+--       `recipe_ingredetail` -> `recipe_id`
+--
+
+--
+-- Truncate table before insert `total_recipe`
+--
+
+TRUNCATE TABLE `total_recipe`;
 --
 -- Dumping data for table `total_recipe`
 --
 
-INSERT INTO `total_recipe` (`recipe_id`, `ingredient_qty`, `energy_kj`, `energy_kcal`, `gi_value`, `carbohydrate`, `protein`, `total_fibre`, `solublf`, `in_solublf`, `invisible_totalfat`, `visiblefat`, `thiamine`, `riboflavin`, `niacin`, `biotin`, `folates`, `ascorbic_Acid`, `vitamin_d2d3`, `calcium`, `phosphorous`, `iron`, `sodium`, `potassium`, `zinc`, `magnesium`, `sfa`) VALUES
-(1, NULL, 863.2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `total_recipe` (`totalrecipe_id`, `recipe_id`, `uom_name`, `uom_value`, `serving_measurements`, `ingredient_qty`, `qty`, `exchanges_per_amount`, `energy_kj`, `energy_kcal`, `carbohydrate`, `protein`, `total_fibre`, `solublf`, `in_solublf`, `invisible_totalfat`, `visiblefat`, `thiamine`, `riboflavin`, `niacin`, `biotin`, `folates`, `ascorbic_Acid`, `vitamin_d2d3`, `calcium`, `phosphorous`, `iron`, `sodium`, `potassium`, `zinc`, `magnesium`, `sfa`, `Cereal`, `Fat`, `fruits`, `milk`, `Nuts`, `pulses`, `sugar`, `vegetables`, `Water`) VALUES
+(8, 9, 'Cup', 250, 150, 162.5, 162.5, 3.675, 945.255, 225.922, 39.6427, 4.00075, 1.405, 0.41, 0.995, 0.31625, 5, 0.028, 0.02575, 0.8525, 0.444, 5.59225, 3.612, 0.02925, 5.446, 48.7395, 0.334, 1.26075, 62.475, 0.611, 10.3175, 0, 2.5, 1, 0.075, NULL, NULL, NULL, NULL, NULL, 0.1),
+(9, 10, 'Medium', 5, 70, 70, 70, 0.7, 308, 73.6141, 16.541, 0.861, 1.358, 0.497, 0.861, 0.231, 0, 0.007, 0.021, 0.329, 1.183, 11.767, 3.332, 0.154, 3.549, 17.024, 0.196, 0.595, 214.2, 0.098, 24.486, 0, NULL, NULL, 0.7, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 11, 'ML Glass', 100, 100, 109, 109, 0.19, 13.35, 3.19074, 0.4349, 0.1841, 0.211, 0.0564, 0.1546, 0.0645, 0, 0.0042, 0.00188, 0.0344, 0.2236, 3.7617, 3.2286, 0.1579, 8.154, 3.0918, 0.2832, 1.1379, 27.35, 0.0326, 4.0986, 0, NULL, NULL, 0.05, NULL, NULL, NULL, NULL, 0.04, 0.1),
+(11, 12, 'Cup', 250, 150, 107, 107, 4.21, 968.108, 231.383, 43.7516, 4.4364, 2.8268, 0.6796, 2.1477, 0.8198, 3, 0.0846, 0.0376, 1.129, 0.9161, 14.9767, 17.3984, 3.9818, 17.7704, 114.457, 2.741, 6.6557, 239.56, 0.8588, 52.8544, 0, 2.5, 0.6, 0.03, NULL, NULL, NULL, 0.6, 0.48, NULL),
+(12, 13, 'Cup', 250, 200, 185, 185, 2.2, 551.89, 131.898, 7.223, 4.06, 3.414, 1.105, 2.3095, 4.3915, 5, 0.037, 0.029, 0.234, 1.2905, 20.401, 10.229, 1.288, 32.765, 35.8885, 0.7475, 38.609, 234.25, 0.2225, 16.84, 0, NULL, 1, NULL, 0.4, NULL, NULL, NULL, 0.8, NULL),
+(13, 14, 'Tea Cup', 200, 200, 317, 317, 2.82, 897.3, 214.46, 23.0813, 5.7242, 0.3858, 0.082, 0.3038, 9.9255, 0, 0.0774, 0.19738, 0.1408, 3.3377, 15.516, 4.1697, 2.7169, 186.544, 133.933, 0.5062, 45.9889, 194.63, 0.4845, 20.008, 0, NULL, NULL, NULL, 0.6, NULL, NULL, 2, 0.07, 0.15),
+(14, 15, 'Medium', 7, 1, 21, 21, 1.05, 305.673, 73.0577, 15.2007, 1.8432, 1.5855, 0.1191, 0.5661, 0.5544, 0, 0.0645, 0.0243, 0.5871, 0.042, 3.8199, 0.024, 0.5724, 14.0787, 46.44, 0.6891, 0.5445, 51, 0.3531, 17.88, 0.0531, 1.05, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(15, 16, 'Cup', 250, 200, 310, 310, 3.83636, 895.232, 213.961, 14.6, 13.822, 5.719, 1.419, 4.301, 10.78, 0, 0.113, 0.151, 1.541, 14.259, 98.959, 68.347, 19.649, 294.267, 231.696, 1.955, 29.403, 517.665, 1.829, 63.715, 0, NULL, NULL, NULL, 1.33636, NULL, NULL, NULL, 2.5, NULL);
 
 --
 -- Triggers `total_recipe`
 --
+DROP TRIGGER IF EXISTS `total_recipe_bi`;
 DELIMITER $$
-CREATE TRIGGER `total_recipe_bi` BEFORE INSERT ON `total_recipe` FOR EACH ROW SET new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id)
+CREATE TRIGGER `total_recipe_bi` BEFORE INSERT ON `total_recipe` FOR EACH ROW SET new.uom_name = (SELECT uom_name FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.uom_value = (SELECT uom_value FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.serving_measurements = (SELECT serving_measurements FROM recipe_ingreinfo WHERE recipe_id = new.recipe_id),
+
+new.ingredient_qty = (Select SUM(ingredient_qty) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.qty = (Select SUM(qty) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.exchanges_per_amount = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.energy_kj = (Select SUM(energy_kj) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.energy_kcal = (Select SUM(energy_kcal) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.carbohydrate = (Select SUM(carbohydrate) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.protein = (Select SUM(protein) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.total_fibre = (Select SUM(total_fibre) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.solublf = (Select SUM(solublf) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.in_solublf = (Select SUM(in_solublf) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.invisible_totalfat = (Select SUM(invisible_totalfat) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.visiblefat = (Select SUM(visiblefat) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.thiamine = (Select SUM(thiamine) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.riboflavin = (Select SUM(riboflavin) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.niacin = (Select SUM(niacin) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.biotin = (Select SUM(biotin) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.folates = (Select SUM(folates) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.ascorbic_Acid = (Select SUM(ascorbic_Acid) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.vitamin_d2d3 = (Select SUM(vitamin_d2d3) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.calcium = (Select SUM(calcium) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.phosphorous = (Select SUM(phosphorous) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.iron = (Select SUM(iron) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.sodium = (Select SUM(sodium) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.potassium = (Select SUM(potassium) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.zinc = (Select SUM(zinc) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.magnesium = (Select SUM(magnesium) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+new.sfa = (Select SUM(sfa) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id),
+
+new.Cereal = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Cereal'),
+
+new.Fat = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Fat'),
+new.fruits = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'fruits'),
+new.milk = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'milk and milk product'),
+new.Nuts = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Nuts & Oil Seeds'),
+new.pulses = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'pulses and legumes'),
+new.sugar = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'sugar'),
+new.vegetables = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'vegetables'),
+new.Water = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Water')
 $$
 DELIMITER ;
 
@@ -1305,7 +3663,10 @@ DELIMITER ;
 --
 -- Table structure for table `uoms`
 --
+-- Creation: Jun 24, 2019 at 08:44 AM
+--
 
+DROP TABLE IF EXISTS `uoms`;
 CREATE TABLE `uoms` (
   `uom_id` int(255) NOT NULL,
   `uom_name` varchar(255) NOT NULL,
@@ -1313,6 +3674,15 @@ CREATE TABLE `uoms` (
   `parent_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELATIONSHIPS FOR TABLE `uoms`:
+--
+
+--
+-- Truncate table before insert `uoms`
+--
+
+TRUNCATE TABLE `uoms`;
 --
 -- Dumping data for table `uoms`
 --
@@ -1336,7 +3706,10 @@ INSERT INTO `uoms` (`uom_id`, `uom_name`, `uom_value`, `parent_name`) VALUES
 --
 -- Table structure for table `users`
 --
+-- Creation: Jun 20, 2019 at 02:14 PM
+--
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
@@ -1349,6 +3722,15 @@ CREATE TABLE `users` (
   `secret` varchar(50) NOT NULL DEFAULT '206b2dbe-ecc9-490b-b81b-83767288bc5e'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- RELATIONSHIPS FOR TABLE `users`:
+--
+
+--
+-- Truncate table before insert `users`
+--
+
+TRUNCATE TABLE `users`;
 --
 -- Dumping data for table `users`
 --
@@ -1363,7 +3745,10 @@ INSERT INTO `users` (`id`, `email`, `username`, `password`, `token`, `lease`, `r
 --
 -- Table structure for table `user_groups`
 --
+-- Creation: Jun 20, 2019 at 02:14 PM
+--
 
+DROP TABLE IF EXISTS `user_groups`;
 CREATE TABLE `user_groups` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
@@ -1372,8 +3757,28 @@ CREATE TABLE `user_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- RELATIONSHIPS FOR TABLE `user_groups`:
+--   `user_id`
+--       `users` -> `id`
+--   `group_id`
+--       `groups` -> `id`
+--
+
+--
+-- Truncate table before insert `user_groups`
+--
+
+TRUNCATE TABLE `user_groups`;
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `admindiet_total`
+--
+ALTER TABLE `admindiet_total`
+  ADD PRIMARY KEY (`admindiet_total`),
+  ADD KEY `code` (`code`);
 
 --
 -- Indexes for table `admin_diets`
@@ -1381,6 +3786,21 @@ CREATE TABLE `user_groups` (
 ALTER TABLE `admin_diets`
   ADD PRIMARY KEY (`admindiet_id`),
   ADD UNIQUE KEY `code` (`code`,`date`);
+
+--
+-- Indexes for table `breakfast_details`
+--
+ALTER TABLE `breakfast_details`
+  ADD PRIMARY KEY (`breakfast_id`),
+  ADD KEY `code` (`code`),
+  ADD KEY `recipe_name` (`recipe_name`);
+
+--
+-- Indexes for table `breakfast_total`
+--
+ALTER TABLE `breakfast_total`
+  ADD PRIMARY KEY (`breakfast_total_id`),
+  ADD KEY `code` (`code`);
 
 --
 -- Indexes for table `categories`
@@ -1393,22 +3813,24 @@ ALTER TABLE `categories`
 -- Indexes for table `customer_signups`
 --
 ALTER TABLE `customer_signups`
-  ADD PRIMARY KEY (`customer_id`),
+  ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `customer_contactno` (`customer_contactno`),
-  ADD UNIQUE KEY `customer_email` (`customer_email`);
+  ADD UNIQUE KEY `customer_email` (`customer_email`),
+  ADD UNIQUE KEY `customer_id` (`customer_id`);
 
 --
 -- Indexes for table `cus_groups`
 --
 ALTER TABLE `cus_groups`
-  ADD PRIMARY KEY (`group_code`),
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `group_code` (`group_code`),
   ADD KEY `dietitian_name` (`dietitian_name`);
 
 --
 -- Indexes for table `cus_imports`
 --
 ALTER TABLE `cus_imports`
-  ADD PRIMARY KEY (`cusimport_id`),
+  ADD PRIMARY KEY (`id`),
   ADD KEY `customer_id` (`customer_id`),
   ADD KEY `package_code` (`package_code`);
 
@@ -1420,11 +3842,48 @@ ALTER TABLE `dietitians`
   ADD UNIQUE KEY `dietitian_name` (`dietitian_name`);
 
 --
--- Indexes for table `diet_details`
+-- Indexes for table `dinner_details`
 --
-ALTER TABLE `diet_details`
-  ADD PRIMARY KEY (`dietdetails_id`),
-  ADD KEY `recipe_name` (`recipe_name`),
+ALTER TABLE `dinner_details`
+  ADD PRIMARY KEY (`dinner_id`),
+  ADD KEY `code` (`code`),
+  ADD KEY `recipe_name` (`recipe_name`);
+
+--
+-- Indexes for table `dinner_total`
+--
+ALTER TABLE `dinner_total`
+  ADD PRIMARY KEY (`dinner_total_id`),
+  ADD KEY `code` (`code`);
+
+--
+-- Indexes for table `earlymorning_total`
+--
+ALTER TABLE `earlymorning_total`
+  ADD PRIMARY KEY (`earlymorning_total_id`),
+  ADD KEY `code` (`code`);
+
+--
+-- Indexes for table `early_morning_details`
+--
+ALTER TABLE `early_morning_details`
+  ADD PRIMARY KEY (`earlymorning_id`),
+  ADD KEY `code` (`code`),
+  ADD KEY `recipe_name` (`recipe_name`);
+
+--
+-- Indexes for table `evening_snack_details`
+--
+ALTER TABLE `evening_snack_details`
+  ADD PRIMARY KEY (`evening_snack_id`),
+  ADD KEY `code` (`code`),
+  ADD KEY `recipe_name` (`recipe_name`);
+
+--
+-- Indexes for table `evening_snack_total`
+--
+ALTER TABLE `evening_snack_total`
+  ADD PRIMARY KEY (`evening_snack_total_id`),
   ADD KEY `code` (`code`);
 
 --
@@ -1447,6 +3906,36 @@ ALTER TABLE `ingredients`
   ADD UNIQUE KEY `food_code` (`food_code`);
 
 --
+-- Indexes for table `lunch_details`
+--
+ALTER TABLE `lunch_details`
+  ADD PRIMARY KEY (`lunch_id`),
+  ADD KEY `code` (`code`),
+  ADD KEY `recipe_name` (`recipe_name`);
+
+--
+-- Indexes for table `lunch_total`
+--
+ALTER TABLE `lunch_total`
+  ADD PRIMARY KEY (`lunch_total_id`),
+  ADD KEY `code` (`code`);
+
+--
+-- Indexes for table `mid_morning_details`
+--
+ALTER TABLE `mid_morning_details`
+  ADD PRIMARY KEY (`mid_morning_id`),
+  ADD KEY `code` (`code`),
+  ADD KEY `recipe_name` (`recipe_name`);
+
+--
+-- Indexes for table `mid_morning_total`
+--
+ALTER TABLE `mid_morning_total`
+  ADD PRIMARY KEY (`mid_morning_total_id`),
+  ADD KEY `code` (`code`);
+
+--
 -- Indexes for table `organizations`
 --
 ALTER TABLE `organizations`
@@ -1466,14 +3955,31 @@ ALTER TABLE `packages`
 -- Indexes for table `picker_lists`
 --
 ALTER TABLE `picker_lists`
+  ADD PRIMARY KEY (`pickerlist_id`),
   ADD KEY `uom_name` (`uom_name`);
 
 --
 -- Indexes for table `plans`
 --
 ALTER TABLE `plans`
-  ADD PRIMARY KEY (`plan_code`),
-  ADD UNIQUE KEY `plan_name` (`plan_name`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `plan_name` (`plan_name`),
+  ADD UNIQUE KEY `plan_code` (`plan_code`);
+
+--
+-- Indexes for table `post_dinner_details`
+--
+ALTER TABLE `post_dinner_details`
+  ADD PRIMARY KEY (`post_dinner_id`),
+  ADD KEY `code` (`code`),
+  ADD KEY `recipe_name` (`recipe_name`);
+
+--
+-- Indexes for table `post_dinner_total`
+--
+ALTER TABLE `post_dinner_total`
+  ADD PRIMARY KEY (`post_dinner_total_id`),
+  ADD KEY `code` (`code`);
 
 --
 -- Indexes for table `recipes`
@@ -1488,7 +3994,16 @@ ALTER TABLE `recipes`
 --
 ALTER TABLE `recipetypes`
   ADD PRIMARY KEY (`recipetype_code`),
-  ADD UNIQUE KEY `recipetype_name` (`recipetype_name`);
+  ADD UNIQUE KEY `recipetype_name` (`recipetype_name`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
+-- Indexes for table `recipe_ingredetail`
+--
+ALTER TABLE `recipe_ingredetail`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `recipe_id` (`recipe_id`),
+  ADD KEY `food_code` (`food_code`);
 
 --
 -- Indexes for table `recipe_ingreinfo`
@@ -1496,8 +4011,15 @@ ALTER TABLE `recipetypes`
 ALTER TABLE `recipe_ingreinfo`
   ADD PRIMARY KEY (`reci_ingreinfo_id`),
   ADD KEY `recipe_id` (`recipe_id`),
-  ADD KEY `uom_name` (`uom_name`),
-  ADD KEY `food_code` (`food_code`);
+  ADD KEY `uom_name` (`uom_name`);
+
+--
+-- Indexes for table `recipe_uom`
+--
+ALTER TABLE `recipe_uom`
+  ADD PRIMARY KEY (`recuom_id`),
+  ADD UNIQUE KEY `recipe_id` (`recipe_id`,`rec_uom_name`),
+  ADD KEY `rec_uom_name` (`rec_uom_name`);
 
 --
 -- Indexes for table `tasks`
@@ -1509,6 +4031,7 @@ ALTER TABLE `tasks`
 -- Indexes for table `total_recipe`
 --
 ALTER TABLE `total_recipe`
+  ADD PRIMARY KEY (`totalrecipe_id`),
   ADD UNIQUE KEY `recipe_id` (`recipe_id`);
 
 --
@@ -1539,10 +4062,28 @@ ALTER TABLE `user_groups`
 --
 
 --
+-- AUTO_INCREMENT for table `admindiet_total`
+--
+ALTER TABLE `admindiet_total`
+  MODIFY `admindiet_total` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `admin_diets`
 --
 ALTER TABLE `admin_diets`
-  MODIFY `admindiet_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `admindiet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `breakfast_details`
+--
+ALTER TABLE `breakfast_details`
+  MODIFY `breakfast_id` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `breakfast_total`
+--
+ALTER TABLE `breakfast_total`
+  MODIFY `breakfast_total_id` bigint(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -1551,10 +4092,22 @@ ALTER TABLE `categories`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `customer_signups`
+--
+ALTER TABLE `customer_signups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `cus_groups`
+--
+ALTER TABLE `cus_groups`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `cus_imports`
 --
 ALTER TABLE `cus_imports`
-  MODIFY `cusimport_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `dietitians`
@@ -1563,10 +4116,40 @@ ALTER TABLE `dietitians`
   MODIFY `dietitian_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `diet_details`
+-- AUTO_INCREMENT for table `dinner_details`
 --
-ALTER TABLE `diet_details`
-  MODIFY `dietdetails_id` bigint(100) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `dinner_details`
+  MODIFY `dinner_id` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `dinner_total`
+--
+ALTER TABLE `dinner_total`
+  MODIFY `dinner_total_id` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `earlymorning_total`
+--
+ALTER TABLE `earlymorning_total`
+  MODIFY `earlymorning_total_id` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `early_morning_details`
+--
+ALTER TABLE `early_morning_details`
+  MODIFY `earlymorning_id` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `evening_snack_details`
+--
+ALTER TABLE `evening_snack_details`
+  MODIFY `evening_snack_id` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `evening_snack_total`
+--
+ALTER TABLE `evening_snack_total`
+  MODIFY `evening_snack_total_id` bigint(10) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `files`
@@ -1587,6 +4170,30 @@ ALTER TABLE `ingredients`
   MODIFY `ingredient_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=564;
 
 --
+-- AUTO_INCREMENT for table `lunch_details`
+--
+ALTER TABLE `lunch_details`
+  MODIFY `lunch_id` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `lunch_total`
+--
+ALTER TABLE `lunch_total`
+  MODIFY `lunch_total_id` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `mid_morning_details`
+--
+ALTER TABLE `mid_morning_details`
+  MODIFY `mid_morning_id` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `mid_morning_total`
+--
+ALTER TABLE `mid_morning_total`
+  MODIFY `mid_morning_total_id` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `organizations`
 --
 ALTER TABLE `organizations`
@@ -1599,22 +4206,70 @@ ALTER TABLE `packages`
   MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
+-- AUTO_INCREMENT for table `picker_lists`
+--
+ALTER TABLE `picker_lists`
+  MODIFY `pickerlist_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=161;
+
+--
+-- AUTO_INCREMENT for table `plans`
+--
+ALTER TABLE `plans`
+  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `post_dinner_details`
+--
+ALTER TABLE `post_dinner_details`
+  MODIFY `post_dinner_id` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `post_dinner_total`
+--
+ALTER TABLE `post_dinner_total`
+  MODIFY `post_dinner_total_id` bigint(10) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `recipe_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `recipe_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `recipetypes`
+--
+ALTER TABLE `recipetypes`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT for table `recipe_ingredetail`
+--
+ALTER TABLE `recipe_ingredetail`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `recipe_ingreinfo`
 --
 ALTER TABLE `recipe_ingreinfo`
-  MODIFY `reci_ingreinfo_id` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `reci_ingreinfo_id` bigint(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
+
+--
+-- AUTO_INCREMENT for table `recipe_uom`
+--
+ALTER TABLE `recipe_uom`
+  MODIFY `recuom_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `tasks`
 --
 ALTER TABLE `tasks`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `total_recipe`
+--
+ALTER TABLE `total_recipe`
+  MODIFY `totalrecipe_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `uoms`
@@ -1639,6 +4294,25 @@ ALTER TABLE `user_groups`
 --
 
 --
+-- Constraints for table `admindiet_total`
+--
+ALTER TABLE `admindiet_total`
+  ADD CONSTRAINT `admindiet_total_ibfk_1` FOREIGN KEY (`code`) REFERENCES `admin_diets` (`code`);
+
+--
+-- Constraints for table `breakfast_details`
+--
+ALTER TABLE `breakfast_details`
+  ADD CONSTRAINT `breakfast_details_ibfk_1` FOREIGN KEY (`code`) REFERENCES `admin_diets` (`code`),
+  ADD CONSTRAINT `breakfast_details_ibfk_2` FOREIGN KEY (`recipe_name`) REFERENCES `recipes` (`recipe_name`);
+
+--
+-- Constraints for table `breakfast_total`
+--
+ALTER TABLE `breakfast_total`
+  ADD CONSTRAINT `breakfast_total_ibfk_1` FOREIGN KEY (`code`) REFERENCES `breakfast_details` (`code`);
+
+--
 -- Constraints for table `categories`
 --
 ALTER TABLE `categories`
@@ -1659,11 +4333,69 @@ ALTER TABLE `cus_imports`
   ADD CONSTRAINT `cus_imports_ibfk_3` FOREIGN KEY (`package_code`) REFERENCES `packages` (`package_code`);
 
 --
--- Constraints for table `diet_details`
+-- Constraints for table `dinner_details`
 --
-ALTER TABLE `diet_details`
-  ADD CONSTRAINT `diet_details_ibfk_3` FOREIGN KEY (`recipe_name`) REFERENCES `recipes` (`recipe_name`),
-  ADD CONSTRAINT `diet_details_ibfk_4` FOREIGN KEY (`code`) REFERENCES `admin_diets` (`code`);
+ALTER TABLE `dinner_details`
+  ADD CONSTRAINT `dinner_details_ibfk_1` FOREIGN KEY (`code`) REFERENCES `admin_diets` (`code`),
+  ADD CONSTRAINT `dinner_details_ibfk_2` FOREIGN KEY (`recipe_name`) REFERENCES `recipes` (`recipe_name`);
+
+--
+-- Constraints for table `dinner_total`
+--
+ALTER TABLE `dinner_total`
+  ADD CONSTRAINT `dinner_total_ibfk_1` FOREIGN KEY (`code`) REFERENCES `dinner_details` (`code`);
+
+--
+-- Constraints for table `earlymorning_total`
+--
+ALTER TABLE `earlymorning_total`
+  ADD CONSTRAINT `earlymorning_total_ibfk_1` FOREIGN KEY (`code`) REFERENCES `early_morning_details` (`code`);
+
+--
+-- Constraints for table `early_morning_details`
+--
+ALTER TABLE `early_morning_details`
+  ADD CONSTRAINT `early_morning_details_ibfk_1` FOREIGN KEY (`code`) REFERENCES `admin_diets` (`code`),
+  ADD CONSTRAINT `early_morning_details_ibfk_2` FOREIGN KEY (`recipe_name`) REFERENCES `recipes` (`recipe_name`);
+
+--
+-- Constraints for table `evening_snack_details`
+--
+ALTER TABLE `evening_snack_details`
+  ADD CONSTRAINT `evening_snack_details_ibfk_1` FOREIGN KEY (`code`) REFERENCES `admin_diets` (`code`),
+  ADD CONSTRAINT `evening_snack_details_ibfk_2` FOREIGN KEY (`recipe_name`) REFERENCES `recipes` (`recipe_name`);
+
+--
+-- Constraints for table `evening_snack_total`
+--
+ALTER TABLE `evening_snack_total`
+  ADD CONSTRAINT `evening_snack_total_ibfk_1` FOREIGN KEY (`code`) REFERENCES `evening_snack_details` (`code`);
+
+--
+-- Constraints for table `lunch_details`
+--
+ALTER TABLE `lunch_details`
+  ADD CONSTRAINT `lunch_details_ibfk_1` FOREIGN KEY (`code`) REFERENCES `admin_diets` (`code`),
+  ADD CONSTRAINT `lunch_details_ibfk_2` FOREIGN KEY (`recipe_name`) REFERENCES `recipes` (`recipe_name`);
+
+--
+-- Constraints for table `lunch_total`
+--
+ALTER TABLE `lunch_total`
+  ADD CONSTRAINT `lunch_total_ibfk_1` FOREIGN KEY (`code`) REFERENCES `lunch_details` (`code`);
+
+--
+-- Constraints for table `mid_morning_details`
+--
+ALTER TABLE `mid_morning_details`
+  ADD CONSTRAINT `mid_morning_details_ibfk_1` FOREIGN KEY (`code`) REFERENCES `admin_diets` (`code`),
+  ADD CONSTRAINT `mid_morning_details_ibfk_2` FOREIGN KEY (`recipe_name`) REFERENCES `recipes` (`recipe_name`);
+
+--
+-- Constraints for table `mid_morning_total`
+--
+ALTER TABLE `mid_morning_total`
+  ADD CONSTRAINT `mid_morning_total_ibfk_1` FOREIGN KEY (`code`) REFERENCES `mid_morning_details` (`code`);
 
 --
 -- Constraints for table `packages`
@@ -1679,24 +4411,49 @@ ALTER TABLE `picker_lists`
   ADD CONSTRAINT `picker_lists_ibfk_1` FOREIGN KEY (`uom_name`) REFERENCES `uoms` (`uom_name`);
 
 --
+-- Constraints for table `post_dinner_details`
+--
+ALTER TABLE `post_dinner_details`
+  ADD CONSTRAINT `post_dinner_details_ibfk_1` FOREIGN KEY (`code`) REFERENCES `admin_diets` (`code`),
+  ADD CONSTRAINT `post_dinner_details_ibfk_2` FOREIGN KEY (`recipe_name`) REFERENCES `recipes` (`recipe_name`);
+
+--
+-- Constraints for table `post_dinner_total`
+--
+ALTER TABLE `post_dinner_total`
+  ADD CONSTRAINT `post_dinner_total_ibfk_1` FOREIGN KEY (`code`) REFERENCES `post_dinner_details` (`code`);
+
+--
 -- Constraints for table `recipes`
 --
 ALTER TABLE `recipes`
   ADD CONSTRAINT `recipes_ibfk_1` FOREIGN KEY (`recipetype_name`) REFERENCES `recipetypes` (`recipetype_name`);
 
 --
+-- Constraints for table `recipe_ingredetail`
+--
+ALTER TABLE `recipe_ingredetail`
+  ADD CONSTRAINT `recipe_ingredetail_ibfk_1` FOREIGN KEY (`recipe_id`) REFERENCES `recipe_ingreinfo` (`recipe_id`),
+  ADD CONSTRAINT `recipe_ingredetail_ibfk_2` FOREIGN KEY (`food_code`) REFERENCES `ingredients` (`food_code`);
+
+--
 -- Constraints for table `recipe_ingreinfo`
 --
 ALTER TABLE `recipe_ingreinfo`
   ADD CONSTRAINT `recipe_ingreinfo_ibfk_1` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`recipe_id`),
-  ADD CONSTRAINT `recipe_ingreinfo_ibfk_3` FOREIGN KEY (`uom_name`) REFERENCES `uoms` (`uom_name`),
-  ADD CONSTRAINT `recipe_ingreinfo_ibfk_4` FOREIGN KEY (`food_code`) REFERENCES `ingredients` (`food_code`);
+  ADD CONSTRAINT `recipe_ingreinfo_ibfk_3` FOREIGN KEY (`uom_name`) REFERENCES `uoms` (`uom_name`);
+
+--
+-- Constraints for table `recipe_uom`
+--
+ALTER TABLE `recipe_uom`
+  ADD CONSTRAINT `recipe_uom_ibfk_3` FOREIGN KEY (`recipe_id`) REFERENCES `total_recipe` (`recipe_id`);
 
 --
 -- Constraints for table `total_recipe`
 --
 ALTER TABLE `total_recipe`
-  ADD CONSTRAINT `total_recipe_ibfk_1` FOREIGN KEY (`recipe_id`) REFERENCES `recipes` (`recipe_id`);
+  ADD CONSTRAINT `total_recipe_ibfk_2` FOREIGN KEY (`recipe_id`) REFERENCES `recipe_ingredetail` (`recipe_id`);
 
 --
 -- Constraints for table `user_groups`
@@ -1704,7 +4461,773 @@ ALTER TABLE `total_recipe`
 ALTER TABLE `user_groups`
   ADD CONSTRAINT `user_groups_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `user_groups_ibfk_2` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`);
-COMMIT;
+
+
+--
+-- Metadata
+--
+USE `phpmyadmin`;
+
+--
+-- Metadata for table admindiet_total
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table admin_diets
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table breakfast_details
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table breakfast_total
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table categories
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table customer_signups
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table cus_groups
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table cus_imports
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table dietitians
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Dumping data for table `pma__column_info`
+--
+
+INSERT INTO `pma__column_info` (`db_name`, `table_name`, `column_name`, `comment`, `mimetype`, `transformation`, `transformation_options`, `input_transformation`, `input_transformation_options`) VALUES
+('fitmix', 'dietitians', 'upload_photo', '', 'image_jpeg', '', '', '', '');
+
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table dinner_details
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table dinner_total
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table earlymorning_total
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table early_morning_details
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table evening_snack_details
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table evening_snack_total
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table files
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table groups
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table ingredients
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table lunch_details
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table lunch_total
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table mid_morning_details
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table mid_morning_total
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table organizations
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table packages
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table picker_lists
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table plans
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table post_dinner_details
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table post_dinner_total
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table recipes
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Dumping data for table `pma__column_info`
+--
+
+INSERT INTO `pma__column_info` (`db_name`, `table_name`, `column_name`, `comment`, `mimetype`, `transformation`, `transformation_options`, `input_transformation`, `input_transformation_options`) VALUES
+('fitmix', 'recipes', 'upload_image', '', 'image_jpeg', '', '', '', '');
+
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table recipetypes
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table recipe_ingredetail
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table recipe_ingreinfo
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table recipe_uom
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table tasks
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table total_recipe
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table uoms
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table users
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for table user_groups
+--
+
+--
+-- Truncate table before insert `pma__column_info`
+--
+
+TRUNCATE TABLE `pma__column_info`;
+--
+-- Truncate table before insert `pma__table_uiprefs`
+--
+
+TRUNCATE TABLE `pma__table_uiprefs`;
+--
+-- Truncate table before insert `pma__tracking`
+--
+
+TRUNCATE TABLE `pma__tracking`;
+--
+-- Metadata for database fitmix
+--
+
+--
+-- Truncate table before insert `pma__bookmark`
+--
+
+TRUNCATE TABLE `pma__bookmark`;
+--
+-- Truncate table before insert `pma__relation`
+--
+
+TRUNCATE TABLE `pma__relation`;
+--
+-- Truncate table before insert `pma__savedsearches`
+--
+
+TRUNCATE TABLE `pma__savedsearches`;
+--
+-- Truncate table before insert `pma__central_columns`
+--
+
+TRUNCATE TABLE `pma__central_columns`;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

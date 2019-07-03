@@ -1,0 +1,15 @@
+SET new.energy = (SELECT SUM(energy) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.carbs = (SELECT SUM(carbs) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.proteins = (SELECT SUM(proteins) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fats = (SELECT SUM(fats) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fibres = (SELECT SUM(fibres) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Cereal = (SELECT SUM(Cereal) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Fat = (SELECT SUM(Fat) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.fruits = (SELECT SUM(fruits) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.milk = (SELECT SUM(milk) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Nuts = (SELECT SUM(Nuts) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.pulses = (SELECT SUM(pulses) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.sugar = (SELECT SUM(sugar) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.vegetables = (SELECT SUM(vegetables) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date)),
+new.Water = (SELECT SUM(Water) FROM post_dinner_details WHERE (code = new.code) AND (date = new.date));
+
