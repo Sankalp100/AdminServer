@@ -50,7 +50,7 @@ new.Cereal = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE rec
 new.Fat = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Fat'),
 new.fruits = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'fruits'),
 new.milk = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'milk and milk product'),
-new.Nuts = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Nuts & Oil Seeds'),
+new.Nuts = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'Nuts &  Oil Seeds'),
 new.pulses = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'pulses and legumes'),
 new.sugar = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'sugar'),
 new.vegetables = (Select SUM(exchanges_per_amount) FROM recipe_ingredetail WHERE recipe_id = new.recipe_id AND food_group = 'vegetables'),
