@@ -14,8 +14,22 @@ new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AN
 new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
 new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) ;
 
+ALL_total ALter
 
-AFTER INSERT earlymorning_total
+
+IF EXISTS(SELECT * FROM admindiet_total WHERE (code= new.code) AND (date= new.date)) THEN
+
+
+  UPDATE admindiet_total SET code=new.code, date= new.date WHERE (code=new.code) AND (date = new.date);
+
+ELSE 
+
+  insert into admindiet_total(code,date) values (new.code,new.date);
+
+END IF
+
+earlymorning
+AFTER INSERT 
 
 IF EXISTS(SELECT * FROM earlymorning_total WHERE (code= new.code) AND (date= new.date)) THEN
 
@@ -28,7 +42,9 @@ ELSE
 
 END IF
 
-AFTER INSERT breakfast_total
+
+ breakfast_
+AFTER INSERT
 
 IF EXISTS(SELECT * FROM breakfast_total WHERE (code= new.code) AND (date= new.date)) THEN
 
@@ -42,7 +58,7 @@ ELSE
 END IF
 
 
-mid_morning_total
+mid_morning_
 AFTER INSERT 
 
 IF EXISTS(SELECT * FROM mid_morning_total WHERE (code= new.code) AND (date= new.date)) THEN
@@ -56,7 +72,7 @@ ELSE
 
 END IF
 
-lunch_total
+lunch_
 
 AFTER INSERT 
 
@@ -72,7 +88,7 @@ ELSE
 END IF
 
 
-evening_snack_total
+evening_snack_
 
 AFTER INSERT 
 
@@ -88,7 +104,7 @@ ELSE
 END IF
 
 
-dinner_total
+dinner_
 
 AFTER INSERT 
 
@@ -104,7 +120,7 @@ ELSE
 END IF
 
 
-post_dinner_total
+post_dinner_
 
 
 AFTER INSERT 
