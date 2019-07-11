@@ -1,40 +1,121 @@
-IF (new.unit = 'Small' OR new.unit = 'Medium' OR new.unit = 'Large'  OR new.unit = 'Cup' OR new.unit = 'Tea Cup'OR new.unit = 'Piece' ) THEN
 
-        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) , 
-        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) ;
-
+SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE  (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) , 
+new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (SELECT picker_value FROM picker_lists WHERE (display_value = new.qty) AND (uom_name = new.unit)) ;
 
 
-        
+AFTER INSERT earlymorning_total
+
+IF EXISTS(SELECT * FROM earlymorning_total WHERE (code= new.code) AND (date= new.date)) THEN
+
+
+  UPDATE earlymorning_total SET code=new.code, date= new.date WHERE (code=new.code) AND (date = new.date);
+
 ELSE 
 
-        SET new.energy = (SELECT energy_kcal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.carbs = (SELECT carbohydrate FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.proteins = (SELECT protein FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.fats = (SELECT visiblefat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.fibres = (SELECT total_fibre FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.Cereal = (SELECT Cereal FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.Fat = (SELECT Fat FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.fruits = (SELECT fruits FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.milk = (SELECT milk FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.Nuts = (SELECT Nuts FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.pulses = (SELECT pulses FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.sugar = (SELECT sugar FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.vegetables = (SELECT vegetables FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ), 
-        new.Water = (SELECT Water FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) ) * (new.qty) /   (SELECT serving_measurements FROM recipe_uom WHERE  (rec_name = new.recipe_name) AND (rec_uom_name = new.unit) );
+  insert into earlymorning_total(code,date) values (new.code,new.date);
+
+END IF
+
+AFTER INSERT breakfast_total
+
+IF EXISTS(SELECT * FROM breakfast_total WHERE (code= new.code) AND (date= new.date)) THEN
 
 
+  UPDATE breakfast_total SET code=new.code, date= new.date WHERE (code=new.code) AND (date = new.date);
 
-END IF;
+ELSE 
+
+  insert into breakfast_total(code,date) values (new.code,new.date);
+
+END IF
+
+
+mid_morning_total
+AFTER INSERT 
+
+IF EXISTS(SELECT * FROM mid_morning_total WHERE (code= new.code) AND (date= new.date)) THEN
+
+
+  UPDATE mid_morning_total SET code=new.code, date= new.date WHERE (code=new.code) AND (date = new.date);
+
+ELSE 
+
+  insert into mid_morning_total(code,date) values (new.code,new.date);
+
+END IF
+
+lunch_total
+
+AFTER INSERT 
+
+IF EXISTS(SELECT * FROM lunch_total WHERE (code= new.code) AND (date= new.date)) THEN
+
+
+  UPDATE lunch_total SET code=new.code, date= new.date WHERE (code=new.code) AND (date = new.date);
+
+ELSE 
+
+  insert into lunch_total(code,date) values (new.code,new.date);
+
+END IF
+
+
+evening_snack_total
+
+AFTER INSERT 
+
+IF EXISTS(SELECT * FROM evening_snack_total WHERE (code= new.code) AND (date= new.date)) THEN
+
+
+  UPDATE evening_snack_total SET code=new.code, date= new.date WHERE (code=new.code) AND (date = new.date);
+
+ELSE 
+
+  insert into evening_snack_total(code,date) values (new.code,new.date);
+
+END IF
+
+
+dinner_total
+
+AFTER INSERT 
+
+IF EXISTS(SELECT * FROM dinner_total WHERE (code= new.code) AND (date= new.date)) THEN
+
+
+  UPDATE dinner_total SET code=new.code, date= new.date WHERE (code=new.code) AND (date = new.date);
+
+ELSE 
+
+  insert into dinner_total(code,date) values (new.code,new.date);
+
+END IF
+
+
+post_dinner_total
+
+
+AFTER INSERT 
+
+IF EXISTS(SELECT * FROM post_dinner_total WHERE (code= new.code) AND (date= new.date)) THEN
+
+
+  UPDATE post_dinner_total SET code=new.code, date= new.date WHERE (code=new.code) AND (date = new.date);
+
+ELSE 
+
+  insert into post_dinner_total(code,date) values (new.code,new.date);
+
+END IF
